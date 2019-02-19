@@ -4,5 +4,7 @@
 *.elf
 *.DS_Store
 *.d
+*.vtg
+*.vpwhistu
 
 README.md

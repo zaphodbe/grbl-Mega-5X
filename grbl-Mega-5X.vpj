@@ -1,0 +1,148 @@
+<!DOCTYPE Project SYSTEM "http://www.slickedit.com/dtd/vse/10.0/vpj.dtd">
+<Project
+	Version="10.0"
+	VendorName="SlickEdit"
+	TemplateName="(Other)"
+	WorkingDir=".">
+	<Config
+		Name="Release"
+		OutputFile=""
+		CompilerConfigName="">
+		<Menu>
+			<Target
+				Name="Compile"
+				MenuCaption="&amp;Compile"
+				CaptureOutputWith="ProcessBuffer"
+				SaveOption="SaveCurrent"
+				RunFromDir="%rw">
+				<Exec/>
+			</Target>
+			<Target
+				Name="Build"
+				MenuCaption="&amp;Build"
+				CaptureOutputWith="ProcessBuffer"
+				SaveOption="SaveWorkspaceFiles"
+				RunFromDir="%rw">
+				<Exec/>
+			</Target>
+			<Target
+				Name="Rebuild"
+				MenuCaption="&amp;Rebuild"
+				CaptureOutputWith="ProcessBuffer"
+				SaveOption="SaveWorkspaceFiles"
+				RunFromDir="%rw">
+				<Exec/>
+			</Target>
+			<Target
+				Name="Debug"
+				MenuCaption="&amp;Debug"
+				SaveOption="SaveNone"
+				RunFromDir="%rw">
+				<Exec/>
+			</Target>
+			<Target
+				Name="Execute"
+				MenuCaption="E&amp;xecute"
+				SaveOption="SaveNone"
+				RunFromDir="%rw">
+				<Exec CmdLine='"grbl-Mega-5X.exe"'/>
+			</Target>
+		</Menu>
+	</Config>
+	<Files>
+		<Folder
+			Name="Source Files"
+			Filters="*.c;*.C;*.cc;*.cpp;*.cp;*.cxx;*.c++;*.prg;*.pas;*.dpr;*.asm;*.s;*.bas;*.java;*.cs;*.sc;*.scala;*.e;*.cob;*.html;*.rc;*.tcl;*.py;*.pl;*.d;*.m;*.mm;*.go;*.groovy;*.gsh"
+			GUID="{7007A6C7-6FA2-4BC6-BF62-4927C24103CB}">
+			<F N="grbl/coolant_control.c"/>
+			<F N="grbl/eeprom.c"/>
+			<F N="doc/script/fit_nonlinear_spindle.py"/>
+			<F N="grbl/gcode.c"/>
+			<F N="grbl/jog.c"/>
+			<F N="grbl/limits.c"/>
+			<F N="grbl/main.c"/>
+			<F N="grbl/motion_control.c"/>
+			<F N="grbl/nuts_bolts.c"/>
+			<F N="grbl/planner.c"/>
+			<F N="grbl/print.c"/>
+			<F N="grbl/probe.c"/>
+			<F N="grbl/protocol.c"/>
+			<F N="grbl/report.c"/>
+			<F N="grbl/serial.c"/>
+			<F N="grbl/settings.c"/>
+			<F N="doc/script/simple_stream.py"/>
+			<F N="grbl/sleep.c"/>
+			<F N="grbl/spindle_control.c"/>
+			<F N="grbl/stepper.c"/>
+			<F N="doc/script/stream.py"/>
+			<F N="grbl/system.c"/>
+		</Folder>
+		<Folder
+			Name="Header Files"
+			Filters="*.h;*.H;*.hh;*.hpp;*.hxx;*.h++;*.inc;*.sh;*.cpy;*.if"
+			GUID="{6F39665B-F0B3-4CBB-8F73-D28A3C5D95E1}">
+			<F N="grbl/config.h"/>
+			<F N="grbl/coolant_control.h"/>
+			<F N="grbl/cpu_map.h"/>
+			<F N="grbl/defaults.h"/>
+			<F N="grbl/eeprom.h"/>
+			<F N="grbl/gcode.h"/>
+			<F N="grbl/grbl.h"/>
+			<F N="grbl/jog.h"/>
+			<F N="grbl/limits.h"/>
+			<F N="grbl/motion_control.h"/>
+			<F N="grbl/nuts_bolts.h"/>
+			<F N="grbl/planner.h"/>
+			<F N="grbl/print.h"/>
+			<F N="grbl/probe.h"/>
+			<F N="grbl/protocol.h"/>
+			<F N="grbl/report.h"/>
+			<F N="grbl/serial.h"/>
+			<F N="grbl/settings.h"/>
+			<F N="grbl/sleep.h"/>
+			<F N="grbl/spindle_control.h"/>
+			<F N="grbl/stepper.h"/>
+			<F N="grbl/system.h"/>
+		</Folder>
+		<Folder
+			Name="Resource Files"
+			Filters="*.ico;*.cur;*.dlg"
+			GUID="{79725A55-B646-4F7E-92C6-84C81F6E36E7}"/>
+		<Folder
+			Name="Bitmaps"
+			Filters="*.bmp"
+			GUID="{C73C705C-D02E-4940-B3AC-014A45771A53}"/>
+		<Folder
+			Name="Other Files"
+			Filters=""
+			GUID="{30B66070-3A66-41E0-B0B2-5C033BAF15C1}">
+			<F N=".gitignore"/>
+			<F N="build/.gitignore"/>
+			<F N="doc/csv/alarm_codes_en_US.csv"/>
+			<F N="doc/csv/build_option_codes_en_US.csv"/>
+			<F N="doc/markdown/change_summary.md"/>
+			<F N="doc/markdown/commands.md"/>
+			<F N="doc/log/commit_log_v0.7.txt"/>
+			<F N="doc/log/commit_log_v0.8c.txt"/>
+			<F N="doc/log/commit_log_v0.9g.txt"/>
+			<F N="doc/log/commit_log_v0.9i.txt"/>
+			<F N="doc/log/commit_log_v0.9j.txt"/>
+			<F N="doc/log/commit_log_v1.0b.txt"/>
+			<F N="doc/log/commit_log_v1.0c.txt"/>
+			<F N="doc/log/commit_log_v1.0d.txt"/>
+			<F N="doc/log/commit_log_v1.1.txt"/>
+			<F N="doc/csv/error_codes_en_US.csv"/>
+			<F N="grbl-Mega-5X.vpj"/>
+			<F N="doc/images/grbl-Mega-5X_Wiring.svg"/>
+			<F N="grbl/examples/grblUpload/grblUpload.ino"/>
+			<F N="doc/markdown/interface.md"/>
+			<F N="doc/markdown/jogging.md"/>
+			<F N="doc/markdown/laser_mode.md"/>
+			<F N="grbl/examples/grblUpload/license.txt"/>
+			<F N="doc/images/Mega-5X-logo.svg"/>
+			<F N="README.md"/>
+			<F N="doc/csv/setting_codes_en_US.csv"/>
+			<F N="doc/markdown/settings.md"/>
+		</Folder>
+	</Files>
+</Project>

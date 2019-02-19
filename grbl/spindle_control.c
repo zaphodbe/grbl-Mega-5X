@@ -47,7 +47,13 @@ uint8_t spindle_get_state()
   #else
     if (bit_istrue(SPINDLE_ENABLE_PORT,(1<<SPINDLE_ENABLE_BIT)) && (SPINDLE_TCCRA_REGISTER & (1<<SPINDLE_COMB_BIT))) {
   #endif
-    if (SPINDLE_DIRECTION_PORT & (1<<SPINDLE_DIRECTION_BIT)) { return(SPINDLE_STATE_CCW); }
+
+  #ifdef INVERT_SPINDLE_DIRECTION_PIN
+    if (bit_isfalse(SPINDLE_DIRECTION_PORT,(1<<SPINDLE_DIRECTION_BIT)))
+  #else
+    if (bit_istrue(SPINDLE_DIRECTION_PORT,(1<<SPINDLE_DIRECTION_BIT)))
+  #endif
+    { return(SPINDLE_STATE_CCW); }
     else { return(SPINDLE_STATE_CW); }
   }
 	return(SPINDLE_STATE_DISABLE);
@@ -65,6 +71,13 @@ void spindle_stop()
   #else
     SPINDLE_ENABLE_PORT &= ~(1<<SPINDLE_ENABLE_BIT); // Set pin to low
   #endif
+
+  #ifdef INVERT_SPINDLE_DIRECTION_PIN
+    SPINDLE_DIRECTION_PORT |= (1<<SPINDLE_DIRECTION_BIT);
+  #else
+    SPINDLE_DIRECTION_PORT &= ~(1<<SPINDLE_DIRECTION_BIT);
+  #endif
+
 }
 
 
@@ -181,7 +194,11 @@ void spindle_set_state(uint8_t state, float rpm)
   
   } else {
   
+    #ifdef INVERT_SPINDLE_DIRECTION_PIN
+    if (state == SPINDLE_ENABLE_CCW) {
+    #else
     if (state == SPINDLE_ENABLE_CW) {
+    #endif
       SPINDLE_DIRECTION_PORT &= ~(1<<SPINDLE_DIRECTION_BIT);
     } else {
       SPINDLE_DIRECTION_PORT |= (1<<SPINDLE_DIRECTION_BIT);
