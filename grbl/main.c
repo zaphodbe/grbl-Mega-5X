@@ -172,6 +172,7 @@ int main(void)
     limits_init();
     probe_init();
     sleep_init();
+    gpio_init();
     plan_reset(); // Clear block buffer and planner variables
     st_reset(); // Clear stepper subsystem variables.
 

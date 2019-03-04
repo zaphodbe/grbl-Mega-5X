@@ -51,32 +51,9 @@
 	</Config>
 	<Files>
 		<Folder
-			Name="Source Files"
-			Filters="*.c;*.C;*.cc;*.cpp;*.cp;*.cxx;*.c++;*.prg;*.pas;*.dpr;*.asm;*.s;*.bas;*.java;*.cs;*.sc;*.scala;*.e;*.cob;*.html;*.rc;*.tcl;*.py;*.pl;*.d;*.m;*.mm;*.go;*.groovy;*.gsh"
-			GUID="{7007A6C7-6FA2-4BC6-BF62-4927C24103CB}">
-			<F N="grbl/coolant_control.c"/>
-			<F N="grbl/eeprom.c"/>
-			<F N="doc/script/fit_nonlinear_spindle.py"/>
-			<F N="grbl/gcode.c"/>
-			<F N="grbl/jog.c"/>
-			<F N="grbl/limits.c"/>
-			<F N="grbl/main.c"/>
-			<F N="grbl/motion_control.c"/>
-			<F N="grbl/nuts_bolts.c"/>
-			<F N="grbl/planner.c"/>
-			<F N="grbl/print.c"/>
-			<F N="grbl/probe.c"/>
-			<F N="grbl/protocol.c"/>
-			<F N="grbl/report.c"/>
-			<F N="grbl/serial.c"/>
-			<F N="grbl/settings.c"/>
-			<F N="doc/script/simple_stream.py"/>
-			<F N="grbl/sleep.c"/>
-			<F N="grbl/spindle_control.c"/>
-			<F N="grbl/stepper.c"/>
-			<F N="doc/script/stream.py"/>
-			<F N="grbl/system.c"/>
-		</Folder>
+			Name="Bitmaps"
+			Filters="*.bmp"
+			GUID="{C73C705C-D02E-4940-B3AC-014A45771A53}"/>
 		<Folder
 			Name="Header Files"
 			Filters="*.h;*.H;*.hh;*.hpp;*.hxx;*.h++;*.inc;*.sh;*.cpy;*.if"
@@ -87,6 +64,7 @@
 			<F N="grbl/defaults.h"/>
 			<F N="grbl/eeprom.h"/>
 			<F N="grbl/gcode.h"/>
+			<F N="grbl/gpio.h"/>
 			<F N="grbl/grbl.h"/>
 			<F N="grbl/jog.h"/>
 			<F N="grbl/limits.h"/>
@@ -104,14 +82,6 @@
 			<F N="grbl/stepper.h"/>
 			<F N="grbl/system.h"/>
 		</Folder>
-		<Folder
-			Name="Resource Files"
-			Filters="*.ico;*.cur;*.dlg"
-			GUID="{79725A55-B646-4F7E-92C6-84C81F6E36E7}"/>
-		<Folder
-			Name="Bitmaps"
-			Filters="*.bmp"
-			GUID="{C73C705C-D02E-4940-B3AC-014A45771A53}"/>
 		<Folder
 			Name="Other Files"
 			Filters=""
@@ -143,6 +113,38 @@
 			<F N="README.md"/>
 			<F N="doc/csv/setting_codes_en_US.csv"/>
 			<F N="doc/markdown/settings.md"/>
+		</Folder>
+		<Folder
+			Name="Resource Files"
+			Filters="*.ico;*.cur;*.dlg"
+			GUID="{79725A55-B646-4F7E-92C6-84C81F6E36E7}"/>
+		<Folder
+			Name="Source Files"
+			Filters="*.c;*.C;*.cc;*.cpp;*.cp;*.cxx;*.c++;*.prg;*.pas;*.dpr;*.asm;*.s;*.bas;*.java;*.cs;*.sc;*.scala;*.e;*.cob;*.html;*.rc;*.tcl;*.py;*.pl;*.d;*.m;*.mm;*.go;*.groovy;*.gsh"
+			GUID="{7007A6C7-6FA2-4BC6-BF62-4927C24103CB}">
+			<F N="grbl/coolant_control.c"/>
+			<F N="grbl/eeprom.c"/>
+			<F N="doc/script/fit_nonlinear_spindle.py"/>
+			<F N="grbl/gcode.c"/>
+			<F N="grbl/gpio.c"/>
+			<F N="grbl/jog.c"/>
+			<F N="grbl/limits.c"/>
+			<F N="grbl/main.c"/>
+			<F N="grbl/motion_control.c"/>
+			<F N="grbl/nuts_bolts.c"/>
+			<F N="grbl/planner.c"/>
+			<F N="grbl/print.c"/>
+			<F N="grbl/probe.c"/>
+			<F N="grbl/protocol.c"/>
+			<F N="grbl/report.c"/>
+			<F N="grbl/serial.c"/>
+			<F N="grbl/settings.c"/>
+			<F N="doc/script/simple_stream.py"/>
+			<F N="grbl/sleep.c"/>
+			<F N="grbl/spindle_control.c"/>
+			<F N="grbl/stepper.c"/>
+			<F N="doc/script/stream.py"/>
+			<F N="grbl/system.c"/>
 		</Folder>
 	</Files>
 </Project>
