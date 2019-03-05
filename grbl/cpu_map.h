@@ -374,6 +374,138 @@
   #define SPINDLE_PWM_BIT   5 // MEGA2560 Digital Pin 8
 
 #endif
+
+#ifdef NEW_CPU_MAP_2560_RAMPS_BOARD // (Arduino Mega 2560) with Ramps 1.4 Board
+  #include "nuts_bolts.h"
+
+  // Serial port interrupt vectors
+  #define SERIAL_RX USART0_RX_vect
+  #define SERIAL_UDRE USART0_UDRE_vect
+
+  // Define step pulse output pins.
+  #define STEP_0            ARDUINO_MEGA_A0
+  #define STEP_1            ARDUINO_MEGA_A6
+  #define STEP_2            ARDUINO_MEGA_D46
+  #if N_AXIS > 3
+    #define STEP_3          ARDUINO_MEGA_D26
+  #endif
+  #if N_AXIS > 4
+    #define STEP_4          ARDUINO_MEGA_D36
+  #endif
+  #if N_AXIS > 5
+    #define STEP_5          ARDUINO_MEGA_D49
+  #endif
+
+  // Define step direction output pins.
+  #define DIRECTION_0       ARDUINO_MEGA_A1
+  #define DIRECTION_1       ARDUINO_MEGA_A7
+  #define DIRECTION_2       ARDUINO_MEGA_D48
+  #if N_AXIS > 3
+    #define DIRECTION_3     ARDUINO_MEGA_D28
+  #endif
+  #if N_AXIS > 4
+    #define DIRECTION_4     ARDUINO_MEGA_D34
+  #endif
+  #if N_AXIS > 5
+    #define DIRECTION_5     ARDUINO_MEGA_D51
+  #endif
+
+  // Define stepper driver enable/disable output pin.
+  #define STEPPER_DISABLE_0    ARDUINO_MEGA_D38
+  #define STEPPER_DISABLE_1    ARDUINO_MEGA_A2
+  #define STEPPER_DISABLE_2    ARDUINO_MEGA_A8
+  #if N_AXIS > 3
+    #define STEPPER_DISABLE_3  ARDUINO_MEGA_D24
+  #endif
+  #if N_AXIS > 4
+    #define STEPPER_DISABLE_4  ARDUINO_MEGA_D30
+  #endif
+  #if N_AXIS > 5
+    #define STEPPER_DISABLE_5  ARDUINO_MEGA_D53
+  #endif
+
+  // Define homing/hard limit switch input pins and limit interrupt vectors.
+  #define MIN_LIMIT_0       ARDUINO_MEGA_D3
+  #define MIN_LIMIT_1       ARDUINO_MEGA_D14
+  #define MIN_LIMIT_2       ARDUINO_MEGA_D18
+  #if N_AXIS > 3
+    #define MIN_LIMIT_3     ARDUINO_MEGA_D42
+  #endif
+  #if N_AXIS > 4
+    #define MIN_LIMIT_4     ARDUINO_MEGA_D44
+  #endif
+  #if N_AXIS > 5
+    #define MIN_LIMIT_5     ARDUINO_MEGA_A3
+  #endif
+
+  #define MAX_LIMIT_0       ARDUINO_MEGA_D2
+  #define MAX_LIMIT_1       ARDUINO_MEGA_D15
+  #define MAX_LIMIT_2       ARDUINO_MEGA_D19
+  #if N_AXIS > 3
+    #define MAX_LIMIT_3     ARDUINO_MEGA_D40
+  #endif
+  #if N_AXIS > 4
+    #define MAX_LIMIT_4     ARDUINO_MEGA_A5
+  #endif
+  #if N_AXIS > 5
+    #define MAX_LIMIT_5     ARDUINO_MEGA_A4
+  #endif
+
+  //  #define LIMIT_INT       PCIE0  // Pin change interrupt enable pin
+  //  #define LIMIT_INT_vect  PCINT0_vect
+  //  #define LIMIT_PCMSK     PCMSK0 // Pin change interrupt register
+  //  #define LIMIT_MASK ((1<<X_LIMIT_BIT)|(1<<Y_LIMIT_BIT)|(1<<Z_LIMIT_BIT)) // All limit bits
+  #define DISABLE_HW_LIMITS
+
+  // Define spindle enable and spindle direction output pins.
+  #define SPINDLE_ENABLE    ARDUINO_MEGA_D4
+  #define SPINDLE_DIRECTION ARDUINO_MEGA_D5
+
+  // Define flood and mist coolant enable output pins.
+  #define COOLANT_FLOOD     ARDUINO_MEGA_D10
+  #define COOLANT_MIST      ARDUINO_MEGA_D9
+
+  // Define user-control CONTROLs (cycle start, reset, feed hold) input pins.
+  // NOTE: All CONTROLs pins must be on the same port and not on a port with other input pins (limits).
+  #define CONTROL_RESET         ARDUINO_MEGA_A9
+  #define CONTROL_FEED_HOLD     ARDUINO_MEGA_A10
+  #define CONTROL_CYCLE_START   ARDUINO_MEGA_A11
+  #define CONTROL_SAFETY_DOOR   ARDUINO_MEGA_A12
+
+  #define CONTROL_INT       PCIE2  // Pin change interrupt enable pin
+  #define CONTROL_INT_vect  PCINT2_vect
+  #define CONTROL_PCMSK     PCMSK2 // Pin change interrupt register
+  #define CONTROL_MASK      (GPIO_MASK(CONTROL_RESET)|GPIO_MASK(CONTROL_FEED_HOLD)|GPIO_MASK(CONTROL_CYCLE_START)|GPIO_MASK(CONTROL_SAFETY_DOOR))
+
+  // Define probe switch input pin.
+  #define PROBE                 ARDUINO_MEGA_A15
+
+  // Advanced Configuration Below You should not need to touch these variables
+  // Set Timer up to use TIMER4B which is attached to Digital Pin 8 - Ramps 1.4 12v output with heat sink
+  #define SPINDLE_PWM_MAX_VALUE     1024.0 // Translates to about 1.9 kHz PWM frequency at 1/8 prescaler
+  #ifndef SPINDLE_PWM_MIN_VALUE
+  #define SPINDLE_PWM_MIN_VALUE   1   // Must be greater than zero.
+  #endif
+  #define SPINDLE_PWM_OFF_VALUE     0
+  #define SPINDLE_PWM_RANGE         (SPINDLE_PWM_MAX_VALUE-SPINDLE_PWM_MIN_VALUE)
+
+  //Control Digital Pin 6 which is Servo 2 signal pin on Ramps 1.4 board
+  #define SPINDLE_TCCRA_REGISTER    TCCR4A
+  #define SPINDLE_TCCRB_REGISTER    TCCR4B
+  #define SPINDLE_OCR_REGISTER      OCR4C
+  #define SPINDLE_COMB_BIT          COM4C1
+
+  // 1/8 Prescaler, 16-bit Fast PWM mode
+  #define SPINDLE_TCCRA_INIT_MASK ((1<<WGM40) | (1<<WGM41))
+  #define SPINDLE_TCCRB_INIT_MASK ((1<<WGM42) | (1<<WGM43) | (1<<CS41))
+  #define SPINDLE_OCRA_REGISTER   OCR4A // 16-bit Fast PWM mode requires top reset value stored here.
+  #define SPINDLE_OCRA_TOP_VALUE  0x0400 // PWM counter reset value. Should be the same as PWM_MAX_VALUE in hex.
+
+  // Define spindle output pins.
+  #define SPINDLE_PWM           ARDUINO_MEGA_D8
+
+#endif
+
 /*
 #ifdef CPU_MAP_CUSTOM_PROC
   // For a custom pin map or different processor, copy and edit one of the available cpu

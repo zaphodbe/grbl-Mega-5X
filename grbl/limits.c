@@ -35,80 +35,80 @@ void limits_init()
 {
   #ifdef DEFAULTS_RAMPS_BOARD
     // Set as input pins
-    MIN_LIMIT_DDR(0) &= ~(1<<MIN_LIMIT_BIT(0));
-    MIN_LIMIT_DDR(1) &= ~(1<<MIN_LIMIT_BIT(1));
-    MIN_LIMIT_DDR(2) &= ~(1<<MIN_LIMIT_BIT(2));
+    GPIO_INPUT(MIN_LIMIT_0);
+    GPIO_INPUT(MIN_LIMIT_1);
+    GPIO_INPUT(MIN_LIMIT_2);
     #if N_AXIS > 3
-    MIN_LIMIT_DDR(3) &= ~(1<<MIN_LIMIT_BIT(3));
+      GPIO_INPUT(MIN_LIMIT_3);
     #endif
     #if N_AXIS > 4
-    MIN_LIMIT_DDR(4) &= ~(1<<MIN_LIMIT_BIT(4));
+      GPIO_INPUT(MIN_LIMIT_4);
     #endif
     #if N_AXIS > 5
-    MIN_LIMIT_DDR(5) &= ~(1<<MIN_LIMIT_BIT(5));
+      GPIO_INPUT(MIN_LIMIT_5);
     #endif
-    MAX_LIMIT_DDR(0) &= ~(1<<MAX_LIMIT_BIT(0));
-    MAX_LIMIT_DDR(1) &= ~(1<<MAX_LIMIT_BIT(1));
-    MAX_LIMIT_DDR(2) &= ~(1<<MAX_LIMIT_BIT(2));
+    GPIO_INPUT(MAX_LIMIT_0);
+    GPIO_INPUT(MAX_LIMIT_1);
+    GPIO_INPUT(MAX_LIMIT_2);
     #if N_AXIS > 3
-    MAX_LIMIT_DDR(3) &= ~(1<<MAX_LIMIT_BIT(3));
+      GPIO_INPUT(MAX_LIMIT_3);
     #endif
     #if N_AXIS > 4
-    MAX_LIMIT_DDR(4) &= ~(1<<MAX_LIMIT_BIT(4));
+      GPIO_INPUT(MAX_LIMIT_4);
     #endif
     #if N_AXIS > 5
-    MAX_LIMIT_DDR(5) &= ~(1<<MAX_LIMIT_BIT(5));
+      GPIO_INPUT(MAX_LIMIT_5);
     #endif
 
     #ifdef DISABLE_LIMIT_PIN_PULL_UP
-      MIN_LIMIT_PORT(0) &= ~(1<<MIN_LIMIT_BIT(0)); // Normal low operation. Requires external pull-down.
-      MIN_LIMIT_PORT(1) &= ~(1<<MIN_LIMIT_BIT(1)); // Normal low operation. Requires external pull-down.
-      MIN_LIMIT_PORT(2) &= ~(1<<MIN_LIMIT_BIT(2)); // Normal low operation. Requires external pull-down.
+      GPIO_NOPULL(MIN_LIMIT_0); // Normal low operation. Requires external pull-down.
+      GPIO_NOPULL(MIN_LIMIT_1); // Normal low operation. Requires external pull-down.
+      GPIO_NOPULL(MIN_LIMIT_2); // Normal low operation. Requires external pull-down.
       #if N_AXIS > 3
-        MIN_LIMIT_PORT(3) &= ~(1<<MIN_LIMIT_BIT(3)); // Normal low operation. Requires external pull-down.
+        GPIO_NOPULL(MIN_LIMIT_3); // Normal low operation. Requires external pull-down.
       #endif
       #if N_AXIS > 4
-        MIN_LIMIT_PORT(4) &= ~(1<<MIN_LIMIT_BIT(4)); // Normal low operation. Requires external pull-down.
+        GPIO_NOPULL(MIN_LIMIT_4); // Normal low operation. Requires external pull-down.
       #endif
       #if N_AXIS > 5
-        MIN_LIMIT_PORT(5) &= ~(1<<MIN_LIMIT_BIT(5)); // Normal low operation. Requires external pull-down.
+        GPIO_NOPULL(MIN_LIMIT_5); // Normal low operation. Requires external pull-down.
       #endif
-      MAX_LIMIT_PORT(0) &= ~(1<<MAX_LIMIT_BIT(0)); // Normal low operation. Requires external pull-down.
-      MAX_LIMIT_PORT(1) &= ~(1<<MAX_LIMIT_BIT(1)); // Normal low operation. Requires external pull-down.
-      MAX_LIMIT_PORT(2) &= ~(1<<MAX_LIMIT_BIT(2)); // Normal low operation. Requires external pull-down.
+      GPIO_NOPULL(MAX_LIMIT_0); // Normal low operation. Requires external pull-down.
+      GPIO_NOPULL(MAX_LIMIT_1); // Normal low operation. Requires external pull-down.
+      GPIO_NOPULL(MAX_LIMIT_2); // Normal low operation. Requires external pull-down.
       #if N_AXIS > 3
-        MAX_LIMIT_PORT(3) &= ~(1<<MAX_LIMIT_BIT(3)); // Normal low operation. Requires external pull-down.
+        GPIO_NOPULL(MAX_LIMIT_3); // Normal low operation. Requires external pull-down.
       #endif
       #if N_AXIS > 4
-        MAX_LIMIT_PORT(4) &= ~(1<<MAX_LIMIT_BIT(4)); // Normal low operation. Requires external pull-down.
+        GPIO_NOPULL(MAX_LIMIT_4); // Normal low operation. Requires external pull-down.
       #endif
       #if N_AXIS > 5
-        MAX_LIMIT_PORT(5) &= ~(1<<MAX_LIMIT_BIT(5)); // Normal low operation. Requires external pull-down.
+        GPIO_NOPULL(MAX_LIMIT_5); // Normal low operation. Requires external pull-down.
       #endif
     #else
-      MIN_LIMIT_PORT(0) |= (1<<MIN_LIMIT_BIT(0));  // Enable internal pull-up resistors. Normal high operation.
-      MIN_LIMIT_PORT(1) |= (1<<MIN_LIMIT_BIT(1));  // Enable internal pull-up resistors. Normal high operation.
-      MIN_LIMIT_PORT(2) |= (1<<MIN_LIMIT_BIT(2));  // Enable internal pull-up resistors. Normal high operation.
+      GPIO_PULLUP(MIN_LIMIT_0);  // Enable internal pull-up resistors. Normal high operation.
+      GPIO_PULLUP(MIN_LIMIT_1);  // Enable internal pull-up resistors. Normal high operation.
+      GPIO_PULLUP(MIN_LIMIT_2);  // Enable internal pull-up resistors. Normal high operation.
       #if N_AXIS > 3
-        MIN_LIMIT_PORT(3) |= (1<<MIN_LIMIT_BIT(3));  // Enable internal pull-up resistors. Normal high operation.
+        GPIO_PULLUP(MIN_LIMIT_3);  // Enable internal pull-up resistors. Normal high operation.
       #endif
       #if N_AXIS > 4
-        MIN_LIMIT_PORT(4) |= (1<<MIN_LIMIT_BIT(4));  // Enable internal pull-up resistors. Normal high operation.
+        GPIO_PULLUP(MIN_LIMIT_4);  // Enable internal pull-up resistors. Normal high operation.
       #endif
       #if N_AXIS > 5
-        MIN_LIMIT_PORT(5) |= (1<<MIN_LIMIT_BIT(5));  // Enable internal pull-up resistors. Normal high operation.
+        GPIO_PULLUP(MIN_LIMIT_5);  // Enable internal pull-up resistors. Normal high operation.
       #endif
-      MAX_LIMIT_PORT(0) |= (1<<MAX_LIMIT_BIT(0));  // Enable internal pull-up resistors. Normal high operation.
-      MAX_LIMIT_PORT(1) |= (1<<MAX_LIMIT_BIT(1));  // Enable internal pull-up resistors. Normal high operation.
-      MAX_LIMIT_PORT(2) |= (1<<MAX_LIMIT_BIT(2));  // Enable internal pull-up resistors. Normal high operation.
+      GPIO_PULLUP(MAX_LIMIT_0);  // Enable internal pull-up resistors. Normal high operation.
+      GPIO_PULLUP(MAX_LIMIT_1);  // Enable internal pull-up resistors. Normal high operation.
+      GPIO_PULLUP(MAX_LIMIT_2);  // Enable internal pull-up resistors. Normal high operation.
       #if N_AXIS > 3
-        MAX_LIMIT_PORT(3) |= (1<<MAX_LIMIT_BIT(3));  // Enable internal pull-up resistors. Normal high operation.
+        GPIO_PULLUP(MAX_LIMIT_3);  // Enable internal pull-up resistors. Normal high operation.
       #endif
       #if N_AXIS > 4
-        MAX_LIMIT_PORT(4) |= (1<<MAX_LIMIT_BIT(4));  // Enable internal pull-up resistors. Normal high operation.
+        GPIO_PULLUP(MAX_LIMIT_4);  // Enable internal pull-up resistors. Normal high operation.
       #endif
       #if N_AXIS > 5
-        MAX_LIMIT_PORT(5) |= (1<<MAX_LIMIT_BIT(5));  // Enable internal pull-up resistors. Normal high operation.
+        GPIO_PULLUP(MAX_LIMIT_5);  // Enable internal pull-up resistors. Normal high operation.
       #endif
     #endif
     #ifndef DISABLE_HW_LIMITS
@@ -164,25 +164,25 @@ void limits_disable()
 }
 #ifdef DEFAULTS_RAMPS_BOARD
   #if N_AXIS == 4
-    static volatile uint8_t * const max_limit_pins[N_AXIS] = {&MAX_LIMIT_PIN(0), &MAX_LIMIT_PIN(1), &MAX_LIMIT_PIN(2), &MAX_LIMIT_PIN(3)};
-    static volatile uint8_t * const min_limit_pins[N_AXIS] = {&MIN_LIMIT_PIN(0), &MIN_LIMIT_PIN(1), &MIN_LIMIT_PIN(2), &MIN_LIMIT_PIN(3)};
-    static const uint8_t max_limit_bits[N_AXIS] = {MAX_LIMIT_BIT(0), MAX_LIMIT_BIT(1), MAX_LIMIT_BIT(2), MAX_LIMIT_BIT(3)};
-    static const uint8_t min_limit_bits[N_AXIS] = {MIN_LIMIT_BIT(0), MIN_LIMIT_BIT(1), MIN_LIMIT_BIT(2), MIN_LIMIT_BIT(3)};
+    static volatile uint8_t * const max_limit_pins[N_AXIS] = {&GPIO_PIN(MAX_LIMIT_0), &GPIO_PIN(MAX_LIMIT_1), &GPIO_PIN(MAX_LIMIT_2), &GPIO_PIN(MAX_LIMIT_3)};
+    static volatile uint8_t * const min_limit_pins[N_AXIS] = {&GPIO_PIN(MIN_LIMIT_0), &GPIO_PIN(MIN_LIMIT_1), &GPIO_PIN(MIN_LIMIT_2), &GPIO_PIN(MIN_LIMIT_3)};
+    static const uint8_t max_limit_bits[N_AXIS] = {GPIO_BIT(MAX_LIMIT_0), GPIO_BIT(MAX_LIMIT_1), GPIO_BIT(MAX_LIMIT_2), GPIO_BIT(MAX_LIMIT_3)};
+    static const uint8_t min_limit_bits[N_AXIS] = {GPIO_BIT(MIN_LIMIT_0), GPIO_BIT(MIN_LIMIT_1), GPIO_BIT(MIN_LIMIT_2), GPIO_BIT(MIN_LIMIT_3)};
   #elif N_AXIS == 5
-    static volatile uint8_t * const max_limit_pins[N_AXIS] = {&MAX_LIMIT_PIN(0), &MAX_LIMIT_PIN(1), &MAX_LIMIT_PIN(2), &MAX_LIMIT_PIN(3), &MAX_LIMIT_PIN(4)};
-    static volatile uint8_t * const min_limit_pins[N_AXIS] = {&MIN_LIMIT_PIN(0), &MIN_LIMIT_PIN(1), &MIN_LIMIT_PIN(2), &MIN_LIMIT_PIN(3), &MIN_LIMIT_PIN(4)};
-    static const uint8_t max_limit_bits[N_AXIS] = {MAX_LIMIT_BIT(0), MAX_LIMIT_BIT(1), MAX_LIMIT_BIT(2), MAX_LIMIT_BIT(3), MAX_LIMIT_BIT(4)};
-    static const uint8_t min_limit_bits[N_AXIS] = {MIN_LIMIT_BIT(0), MIN_LIMIT_BIT(1), MIN_LIMIT_BIT(2), MIN_LIMIT_BIT(3), MIN_LIMIT_BIT(4)};
+    static volatile uint8_t * const max_limit_pins[N_AXIS] = {&GPIO_PIN(MAX_LIMIT_0), &GPIO_PIN(MAX_LIMIT_1), &GPIO_PIN(MAX_LIMIT_2), &GPIO_PIN(MAX_LIMIT_3), &GPIO_PIN(MAX_LIMIT_4)};
+    static volatile uint8_t * const min_limit_pins[N_AXIS] = {&GPIO_PIN(MIN_LIMIT_0), &GPIO_PIN(MIN_LIMIT_1), &GPIO_PIN(MIN_LIMIT_2), &GPIO_PIN(MIN_LIMIT_3), &GPIO_PIN(MIN_LIMIT_4)};
+    static const uint8_t max_limit_bits[N_AXIS] = {GPIO_BIT(MAX_LIMIT_0), GPIO_BIT(MAX_LIMIT_1), GPIO_BIT(MAX_LIMIT_2), GPIO_BIT(MAX_LIMIT_3), GPIO_BIT(MAX_LIMIT_4)};
+    static const uint8_t min_limit_bits[N_AXIS] = {GPIO_BIT(MIN_LIMIT_0), GPIO_BIT(MIN_LIMIT_1), GPIO_BIT(MIN_LIMIT_2), GPIO_BIT(MIN_LIMIT_3), GPIO_BIT(MIN_LIMIT_4)};
   #elif N_AXIS == 6
-    static volatile uint8_t * const max_limit_pins[N_AXIS] = {&MAX_LIMIT_PIN(0), &MAX_LIMIT_PIN(1), &MAX_LIMIT_PIN(2), &MAX_LIMIT_PIN(3), &MAX_LIMIT_PIN(4), &MAX_LIMIT_PIN(5)};
-    static volatile uint8_t * const min_limit_pins[N_AXIS] = {&MIN_LIMIT_PIN(0), &MIN_LIMIT_PIN(1), &MIN_LIMIT_PIN(2), &MIN_LIMIT_PIN(3), &MIN_LIMIT_PIN(4), &MIN_LIMIT_PIN(5)};
-    static const uint8_t max_limit_bits[N_AXIS] = {MAX_LIMIT_BIT(0), MAX_LIMIT_BIT(1), MAX_LIMIT_BIT(2), MAX_LIMIT_BIT(3), MAX_LIMIT_BIT(4), MAX_LIMIT_BIT(5)};
-    static const uint8_t min_limit_bits[N_AXIS] = {MIN_LIMIT_BIT(0), MIN_LIMIT_BIT(1), MIN_LIMIT_BIT(2), MIN_LIMIT_BIT(3), MIN_LIMIT_BIT(4), MIN_LIMIT_BIT(5)};
+    static volatile uint8_t * const max_limit_pins[N_AXIS] = {&GPIO_PIN(MAX_LIMIT_0), &GPIO_PIN(MAX_LIMIT_1), &GPIO_PIN(MAX_LIMIT_2), &GPIO_PIN(MAX_LIMIT_3), &GPIO_PIN(MAX_LIMIT_4), &GPIO_PIN(MAX_LIMIT_5)};
+    static volatile uint8_t * const min_limit_pins[N_AXIS] = {&GPIO_PIN(MIN_LIMIT_0), &GPIO_PIN(MIN_LIMIT_1), &GPIO_PIN(MIN_LIMIT_2), &GPIO_PIN(MIN_LIMIT_3), &GPIO_PIN(MIN_LIMIT_4), &GPIO_PIN(MIN_LIMIT_5)};
+    static const uint8_t max_limit_bits[N_AXIS] = {GPIO_BIT(MAX_LIMIT_0), GPIO_BIT(MAX_LIMIT_1), GPIO_BIT(MAX_LIMIT_2), GPIO_BIT(MAX_LIMIT_3), GPIO_BIT(MAX_LIMIT_4), GPIO_BIT(MAX_LIMIT_5)};
+    static const uint8_t min_limit_bits[N_AXIS] = {GPIO_BIT(MIN_LIMIT_0), GPIO_BIT(MIN_LIMIT_1), GPIO_BIT(MIN_LIMIT_2), GPIO_BIT(MIN_LIMIT_3), GPIO_BIT(MIN_LIMIT_4), GPIO_BIT(MIN_LIMIT_5)};
   #else
-    static volatile uint8_t * const max_limit_pins[N_AXIS] = {&MAX_LIMIT_PIN(0), &MAX_LIMIT_PIN(1), &MAX_LIMIT_PIN(2)};
-    static volatile uint8_t * const min_limit_pins[N_AXIS] = {&MIN_LIMIT_PIN(0), &MIN_LIMIT_PIN(1), &MIN_LIMIT_PIN(2)};
-    static const uint8_t max_limit_bits[N_AXIS] = {MAX_LIMIT_BIT(0), MAX_LIMIT_BIT(1), MAX_LIMIT_BIT(2)};
-    static const uint8_t min_limit_bits[N_AXIS] = {MIN_LIMIT_BIT(0), MIN_LIMIT_BIT(1), MIN_LIMIT_BIT(2)};
+    static volatile uint8_t * const max_limit_pins[N_AXIS] = {&GPIO_PIN(MAX_LIMIT_0), &GPIO_PIN(MAX_LIMIT_1), &GPIO_PIN(MAX_LIMIT_2)};
+    static volatile uint8_t * const min_limit_pins[N_AXIS] = {&GPIO_PIN(MIN_LIMIT_0), &GPIO_PIN(MIN_LIMIT_1), &GPIO_PIN(MIN_LIMIT_2)};
+    static const uint8_t max_limit_bits[N_AXIS] = {GPIO_BIT(MAX_LIMIT_0), GPIO_BIT(MAX_LIMIT_1), GPIO_BIT(MAX_LIMIT_2)};
+    static const uint8_t min_limit_bits[N_AXIS] = {GPIO_BIT(MIN_LIMIT_0), GPIO_BIT(MIN_LIMIT_1), GPIO_BIT(MIN_LIMIT_2)};
   #endif
 #endif // DEFAULTS_RAMPS_BOARD
 

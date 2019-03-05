@@ -251,30 +251,30 @@ void st_wake_up()
   // Enable stepper drivers.
   #ifdef DEFAULTS_RAMPS_BOARD
     if (bit_istrue(settings.flags,BITFLAG_INVERT_ST_ENABLE)) {
-      STEPPER_DISABLE_PORT(0) |= (1 << STEPPER_DISABLE_BIT(0));
-      STEPPER_DISABLE_PORT(1) |= (1 << STEPPER_DISABLE_BIT(1));
-      STEPPER_DISABLE_PORT(2) |= (1 << STEPPER_DISABLE_BIT(2));
+      GPIO_SET(STEPPER_DISABLE_0);
+      GPIO_SET(STEPPER_DISABLE_1);
+      GPIO_SET(STEPPER_DISABLE_2);
       #if N_AXIS > 3
-        STEPPER_DISABLE_PORT(3) |= (1 << STEPPER_DISABLE_BIT(3));
+        GPIO_SET(STEPPER_DISABLE_3);
       #endif
       #if N_AXIS > 4
-        STEPPER_DISABLE_PORT(4) |= (1 << STEPPER_DISABLE_BIT(4));
+        GPIO_SET(STEPPER_DISABLE_4);
       #endif
       #if N_AXIS > 5
-        STEPPER_DISABLE_PORT(5) |= (1 << STEPPER_DISABLE_BIT(5));
+        GPIO_SET(STEPPER_DISABLE_5);
       #endif
     } else {
-      STEPPER_DISABLE_PORT(0) &= ~(1 << STEPPER_DISABLE_BIT(0));
-      STEPPER_DISABLE_PORT(1) &= ~(1 << STEPPER_DISABLE_BIT(1));
-      STEPPER_DISABLE_PORT(2) &= ~(1 << STEPPER_DISABLE_BIT(2));
+      GPIO_CLR(STEPPER_DISABLE_0);
+      GPIO_CLR(STEPPER_DISABLE_1);
+      GPIO_CLR(STEPPER_DISABLE_2);
       #if N_AXIS > 3
-        STEPPER_DISABLE_PORT(3) &= ~(1 << STEPPER_DISABLE_BIT(3));
+        GPIO_CLR(STEPPER_DISABLE_3);
       #endif
       #if N_AXIS > 4
-        STEPPER_DISABLE_PORT(4) &= ~(1 << STEPPER_DISABLE_BIT(4));
+        GPIO_CLR(STEPPER_DISABLE_4);
       #endif
       #if N_AXIS > 5
-        STEPPER_DISABLE_PORT(5) &= ~(1 << STEPPER_DISABLE_BIT(5));
+        GPIO_CLR(STEPPER_DISABLE_5);
       #endif
     }
     // Initialize stepper output bits to ensure first ISR call does not step.
@@ -323,30 +323,30 @@ void st_go_idle()
   if (bit_istrue(settings.flags,BITFLAG_INVERT_ST_ENABLE)) { pin_state = !pin_state; } // Apply pin invert.
   #ifdef DEFAULTS_RAMPS_BOARD
     if (pin_state) {
-      STEPPER_DISABLE_PORT(0) |= (1 << STEPPER_DISABLE_BIT(0));
-      STEPPER_DISABLE_PORT(1) |= (1 << STEPPER_DISABLE_BIT(1));
-      STEPPER_DISABLE_PORT(2) |= (1 << STEPPER_DISABLE_BIT(2));
+      GPIO_SET(STEPPER_DISABLE_0);
+      GPIO_SET(STEPPER_DISABLE_1);
+      GPIO_SET(STEPPER_DISABLE_2);
       #if N_AXIS > 3
-        STEPPER_DISABLE_PORT(3) |= (1 << STEPPER_DISABLE_BIT(3));
+        GPIO_SET(STEPPER_DISABLE_3);
       #endif
       #if N_AXIS > 4
-        STEPPER_DISABLE_PORT(4) |= (1 << STEPPER_DISABLE_BIT(4));
+        GPIO_SET(STEPPER_DISABLE_4);
       #endif
       #if N_AXIS > 5
-        STEPPER_DISABLE_PORT(5) |= (1 << STEPPER_DISABLE_BIT(5));
+        GPIO_SET(STEPPER_DISABLE_5);
       #endif
     } else {
-      STEPPER_DISABLE_PORT(0) &= ~(1 << STEPPER_DISABLE_BIT(0));
-      STEPPER_DISABLE_PORT(1) &= ~(1 << STEPPER_DISABLE_BIT(1));
-      STEPPER_DISABLE_PORT(2) &= ~(1 << STEPPER_DISABLE_BIT(2));
+      GPIO_CLR(STEPPER_DISABLE_0);
+      GPIO_CLR(STEPPER_DISABLE_1);
+      GPIO_CLR(STEPPER_DISABLE_2);
       #if N_AXIS > 3
-        STEPPER_DISABLE_PORT(3) &= ~(1 << STEPPER_DISABLE_BIT(3));
+        GPIO_CLR(STEPPER_DISABLE_3);
       #endif
       #if N_AXIS > 4
-        STEPPER_DISABLE_PORT(4) &= ~(1 << STEPPER_DISABLE_BIT(4));
+        GPIO_CLR(STEPPER_DISABLE_4);
       #endif
       #if N_AXIS > 5
-        STEPPER_DISABLE_PORT(5) &= ~(1 << STEPPER_DISABLE_BIT(5));
+        GPIO_CLR(STEPPER_DISABLE_5);
       #endif
     }
   #else
@@ -414,17 +414,17 @@ ISR(TIMER1_COMPA_vect)
 
   // Set the direction pins a couple of nanoseconds before we step the steppers
   #ifdef DEFAULTS_RAMPS_BOARD
-    DIRECTION_PORT(0) = (DIRECTION_PORT(0) & ~(1 << DIRECTION_BIT(0))) | st.dir_outbits[0];
-    DIRECTION_PORT(1) = (DIRECTION_PORT(1) & ~(1 << DIRECTION_BIT(1))) | st.dir_outbits[1];
-    DIRECTION_PORT(2) = (DIRECTION_PORT(2) & ~(1 << DIRECTION_BIT(2))) | st.dir_outbits[2];
+    GPIO_WR(DIRECTION_0, st.dir_outbits[0]);
+    GPIO_WR(DIRECTION_1, st.dir_outbits[1]);
+    GPIO_WR(DIRECTION_2, st.dir_outbits[2]);
     #if N_AXIS > 3
-    DIRECTION_PORT(3) = (DIRECTION_PORT(3) & ~(1 << DIRECTION_BIT(3))) | st.dir_outbits[3];
+      GPIO_WR(DIRECTION_3, st.dir_outbits[3]);
     #endif
     #if N_AXIS > 4
-    DIRECTION_PORT(4) = (DIRECTION_PORT(4) & ~(1 << DIRECTION_BIT(4))) | st.dir_outbits[4];
+      GPIO_WR(DIRECTION_4, st.dir_outbits[4]);
     #endif
     #if N_AXIS > 5
-    DIRECTION_PORT(5) = (DIRECTION_PORT(5) & ~(1 << DIRECTION_BIT(5))) | st.dir_outbits[5];
+      GPIO_WR(DIRECTION_5, st.dir_outbits[5]);
     #endif
   #else
     DIRECTION_PORT = (DIRECTION_PORT & ~DIRECTION_MASK) | (st.dir_outbits & DIRECTION_MASK);
@@ -433,30 +433,30 @@ ISR(TIMER1_COMPA_vect)
   // Then pulse the stepping pins
   #ifdef DEFAULTS_RAMPS_BOARD
     #ifdef STEP_PULSE_DELAY
-      st.step_bits[0] = (STEP_PORT(0) & ~(1 << STEP_BIT(0))) | st.step_outbits[0]; // Store out_bits to prevent overwriting.
-      st.step_bits[1] = (STEP_PORT(1) & ~(1 << STEP_BIT(1))) | st.step_outbits[1]; // Store out_bits to prevent overwriting.
-      st.step_bits[2] = (STEP_PORT(2) & ~(1 << STEP_BIT(2))) | st.step_outbits[2]; // Store out_bits to prevent overwriting.
+      st.step_bits[0] = st.step_outbits[0]; // Store out_bits to prevent overwriting.
+      st.step_bits[1] = st.step_outbits[1]; // Store out_bits to prevent overwriting.
+      st.step_bits[2] = st.step_outbits[2]; // Store out_bits to prevent overwriting.
       #if N_AXIS > 3
-        st.step_bits[3] = (STEP_PORT(3) & ~(1 << STEP_BIT(3))) | st.step_outbits[3]; // Store out_bits to prevent overwriting.
+        st.step_bits[3] = st.step_outbits[3]; // Store out_bits to prevent overwriting.
       #endif
       #if N_AXIS > 4
-        st.step_bits[4] = (STEP_PORT(4) & ~(1 << STEP_BIT(4))) | st.step_outbits[4]; // Store out_bits to prevent overwriting.
+        st.step_bits[4] = st.step_outbits[4]; // Store out_bits to prevent overwriting.
       #endif
       #if N_AXIS > 5
-        st.step_bits[5] = (STEP_PORT(5) & ~(1 << STEP_BIT(5))) | st.step_outbits[5]; // Store out_bits to prevent overwriting.
+        st.step_bits[5] = st.step_outbits[5]; // Store out_bits to prevent overwriting.
       #endif
     #else
-      STEP_PORT(0) = (STEP_PORT(0) & ~(1 << STEP_BIT(0))) | st.step_outbits[0];
-      STEP_PORT(1) = (STEP_PORT(1) & ~(1 << STEP_BIT(1))) | st.step_outbits[1];
-      STEP_PORT(2) = (STEP_PORT(2) & ~(1 << STEP_BIT(2))) | st.step_outbits[2];
+      GPIO_WR(STEP_0, st.step_outbits[0]);
+      GPIO_WR(STEP_1, st.step_outbits[1]);
+      GPIO_WR(STEP_2, st.step_outbits[2]);
       #if N_AXIS > 3
-        STEP_PORT(3) = (STEP_PORT(3) & ~(1 << STEP_BIT(3))) | st.step_outbits[3];
+        GPIO_WR(STEP_3, st.step_outbits[3]);
       #endif
       #if N_AXIS > 4
-        STEP_PORT(4) = (STEP_PORT(4) & ~(1 << STEP_BIT(4))) | st.step_outbits[4];
+        GPIO_WR(STEP_4, st.step_outbits[4]);
       #endif
       #if N_AXIS > 5
-        STEP_PORT(5) = (STEP_PORT(5) & ~(1 << STEP_BIT(5))) | st.step_outbits[5];
+        GPIO_WR(STEP_5, st.step_outbits[5]);
       #endif
     #endif
   #else
@@ -564,9 +564,9 @@ ISR(TIMER1_COMPA_vect)
   #endif
   #ifdef DEFAULTS_RAMPS_BOARD
     if (st.counter_x > st.exec_block->step_event_count) {
-      st.step_outbits[AXIS_1] |= (1<<STEP_BIT(AXIS_1));
+      st.step_outbits[AXIS_1] |= GPIO_MASK(GPIO_IDX(STEP,AXIS_1));
       st.counter_x -= st.exec_block->step_event_count;
-      if (st.exec_block->direction_bits[AXIS_1] & (1<<DIRECTION_BIT(AXIS_1))) { sys_position[AXIS_1]--; }
+      if (st.exec_block->direction_bits[AXIS_1] & GPIO_MASK(GPIO_IDX(DIRECTION,AXIS_1))) { sys_position[AXIS_1]--; }
       else { sys_position[AXIS_1]++; }
     }
   #else
@@ -585,9 +585,9 @@ ISR(TIMER1_COMPA_vect)
   #endif
   #ifdef DEFAULTS_RAMPS_BOARD
     if (st.counter_y > st.exec_block->step_event_count) {
-      st.step_outbits[AXIS_2] |= (1<<STEP_BIT(AXIS_2));
+      st.step_outbits[AXIS_2] |= GPIO_MASK(GPIO_IDX(STEP,AXIS_2));
       st.counter_y -= st.exec_block->step_event_count;
-      if (st.exec_block->direction_bits[AXIS_2] & (1<<DIRECTION_BIT(AXIS_2))) { sys_position[AXIS_2]--; }
+      if (st.exec_block->direction_bits[AXIS_2] & GPIO_MASK(GPIO_IDX(DIRECTION,AXIS_2))) { sys_position[AXIS_2]--; }
       else { sys_position[AXIS_2]++; }
     }
   #else
@@ -605,9 +605,9 @@ ISR(TIMER1_COMPA_vect)
   #endif
   #ifdef DEFAULTS_RAMPS_BOARD
     if (st.counter_z > st.exec_block->step_event_count) {
-      st.step_outbits[AXIS_3] |= (1<<STEP_BIT(AXIS_3));
+      st.step_outbits[AXIS_3] |= GPIO_MASK(GPIO_IDX(STEP,AXIS_3));
       st.counter_z -= st.exec_block->step_event_count;
-      if (st.exec_block->direction_bits[AXIS_3] & (1<<DIRECTION_BIT(AXIS_3))) { sys_position[AXIS_3]--; }
+      if (st.exec_block->direction_bits[AXIS_3] & GPIO_MASK(GPIO_IDX(DIRECTION,AXIS_3))) { sys_position[AXIS_3]--; }
       else { sys_position[AXIS_3]++; }
     }
   #else
@@ -626,9 +626,9 @@ ISR(TIMER1_COMPA_vect)
     #endif
     #ifdef DEFAULTS_RAMPS_BOARD
       if (st.counter_4 > st.exec_block->step_event_count) {
-        st.step_outbits[AXIS_4] |= (1<<STEP_BIT(AXIS_4));
+        st.step_outbits[AXIS_4] |= GPIO_MASK(GPIO_IDX(STEP,AXIS_4));
         st.counter_4 -= st.exec_block->step_event_count;
-        if (st.exec_block->direction_bits[AXIS_4] & (1<<DIRECTION_BIT(AXIS_4))) { sys_position[AXIS_4]--; }
+        if (st.exec_block->direction_bits[AXIS_4] & GPIO_MASK(GPIO_IDX(DIRECTION,AXIS_4))) { sys_position[AXIS_4]--; }
         else { sys_position[AXIS_4]++; }
       }
     #endif // Ramps Board
@@ -641,9 +641,9 @@ ISR(TIMER1_COMPA_vect)
     #endif
     #ifdef DEFAULTS_RAMPS_BOARD
       if (st.counter_5 > st.exec_block->step_event_count) {
-        st.step_outbits[AXIS_5] |= (1<<STEP_BIT(AXIS_5));
+        st.step_outbits[AXIS_5] |= GPIO_MASK(GPIO_IDX(STEP,AXIS_5));
         st.counter_5 -= st.exec_block->step_event_count;
-        if (st.exec_block->direction_bits[AXIS_5] & (1<<DIRECTION_BIT(AXIS_5))) { sys_position[AXIS_5]--; }
+        if (st.exec_block->direction_bits[AXIS_5] & GPIO_MASK(GPIO_IDX(DIRECTION,AXIS_5))) { sys_position[AXIS_5]--; }
         else { sys_position[AXIS_5]++; }
       }
     #endif // Ramps Board
@@ -656,9 +656,9 @@ ISR(TIMER1_COMPA_vect)
     #endif
     #ifdef DEFAULTS_RAMPS_BOARD
       if (st.counter_6 > st.exec_block->step_event_count) {
-        st.step_outbits[AXIS_6] |= (1<<STEP_BIT(AXIS_6));
+        st.step_outbits[AXIS_6] |= GPIO_MASK(GPIO_IDX(STEP,AXIS_6));
         st.counter_6 -= st.exec_block->step_event_count;
-        if (st.exec_block->direction_bits[AXIS_6] & (1<<DIRECTION_BIT(AXIS_6))) { sys_position[AXIS_6]--; }
+        if (st.exec_block->direction_bits[AXIS_6] & GPIO_MASK(GPIO_IDX(DIRECTION,AXIS_6))) { sys_position[AXIS_6]--; }
         else { sys_position[AXIS_6]++; }
       }
     #endif // Ramps Board
@@ -702,17 +702,17 @@ ISR(TIMER0_OVF_vect)
 {
   // Reset stepping pins (leave the direction pins)
   #ifdef DEFAULTS_RAMPS_BOARD
-    STEP_PORT(0) = (STEP_PORT(0) & ~(1 << STEP_BIT(0))) | step_port_invert_mask[0];
-    STEP_PORT(1) = (STEP_PORT(1) & ~(1 << STEP_BIT(1))) | step_port_invert_mask[1];
-    STEP_PORT(2) = (STEP_PORT(2) & ~(1 << STEP_BIT(2))) | step_port_invert_mask[2];
+    GPIO_WR(STEP_0, step_port_invert_mask[0]);
+    GPIO_WR(STEP_1, step_port_invert_mask[1]);
+    GPIO_WR(STEP_2, step_port_invert_mask[2]);
     #if N_AXIS > 3
-      STEP_PORT(3) = (STEP_PORT(3) & ~(1 << STEP_BIT(3))) | step_port_invert_mask[3];
+      GPIO_WR(STEP_3, step_port_invert_mask[3]);
     #endif
     #if N_AXIS > 4
-      STEP_PORT(4) = (STEP_PORT(4) & ~(1 << STEP_BIT(4))) | step_port_invert_mask[4];
+      GPIO_WR(STEP_4, step_port_invert_mask[4]);
     #endif
     #if N_AXIS > 5
-      STEP_PORT(5) = (STEP_PORT(5) & ~(1 << STEP_BIT(5))) | step_port_invert_mask[5];
+      GPIO_WR(STEP_5, step_port_invert_mask[5]);
     #endif
   #else
     STEP_PORT = (STEP_PORT & ~STEP_MASK) | (step_port_invert_mask & STEP_MASK);
@@ -728,17 +728,17 @@ ISR(TIMER0_OVF_vect)
   ISR(TIMER0_COMPA_vect)
   {
     #ifdef DEFAULTS_RAMPS_BOARD
-      STEP_PORT(0) = st.step_bits[0]; // Begin step pulse.
-      STEP_PORT(1) = st.step_bits[1]; // Begin step pulse.
-      STEP_PORT(2) = st.step_bits[2]; // Begin step pulse.
+      GPIO_WR(STEP_0, st.step_bits[0]); // Begin step pulse.
+      GPIO_WR(STEP_1, st.step_bits[1]); // Begin step pulse.
+      GPIO_WR(STEP_2, st.step_bits[2]); // Begin step pulse.
       #if N_AXIS > 3
-        STEP_PORT(3) = st.step_bits[3]; // Begin step pulse.
+        GPIO_WR(STEP_3, st.step_bits[3]); // Begin step pulse.
       #endif
       #if N_AXIS > 4
-        STEP_PORT(4) = st.step_bits[4]; // Begin step pulse.
+        GPIO_WR(STEP_4, st.step_bits[4]); // Begin step pulse.
       #endif
       #if N_AXIS > 5
-        STEP_PORT(5) = st.step_bits[5]; // Begin step pulse.
+        GPIO_WR(STEP_5, st.step_bits[5]); // Begin step pulse.
       #endif
     #else
       STEP_PORT = st.step_bits; // Begin step pulse.
@@ -793,25 +793,25 @@ void st_reset()
       st.dir_outbits[idx] = dir_port_invert_mask[idx]; // Initialize direction bits to default.
     }
 
-    STEP_PORT(0) = (STEP_PORT(0) & ~(1 << STEP_BIT(0))) | step_port_invert_mask[0];
-    DIRECTION_PORT(0) = (DIRECTION_PORT(0) & ~(1 << DIRECTION_BIT(0))) | dir_port_invert_mask[0];
+    GPIO_WR(STEP_0, step_port_invert_mask[0]);
+    GPIO_WR(DIRECTION_0, dir_port_invert_mask[0]);
 
-    STEP_PORT(1) = (STEP_PORT(1) & ~(1 << STEP_BIT(1))) | step_port_invert_mask[1];
-    DIRECTION_PORT(1) = (DIRECTION_PORT(1) & ~(1 << DIRECTION_BIT(1))) | dir_port_invert_mask[1];
+    GPIO_WR(STEP_1, step_port_invert_mask[1]);
+    GPIO_WR(DIRECTION_1, dir_port_invert_mask[1]);
 
-    STEP_PORT(2) = (STEP_PORT(2) & ~(1 << STEP_BIT(2))) | step_port_invert_mask[2];
-    DIRECTION_PORT(2) = (DIRECTION_PORT(2) & ~(1 << DIRECTION_BIT(2))) | dir_port_invert_mask[2];
+    GPIO_WR(STEP_2, step_port_invert_mask[2]);
+    GPIO_WR(DIRECTION_2, dir_port_invert_mask[2]);
     #if N_AXIS > 3
-      STEP_PORT(3) = (STEP_PORT(3) & ~(1 << STEP_BIT(3))) | step_port_invert_mask[3];
-      DIRECTION_PORT(3) = (DIRECTION_PORT(3) & ~(1 << DIRECTION_BIT(3))) | dir_port_invert_mask[3];
+      GPIO_WR(STEP_3, step_port_invert_mask[3]);
+      GPIO_WR(DIRECTION_3, dir_port_invert_mask[3]);
     #endif
     #if N_AXIS > 4
-      STEP_PORT(4) = (STEP_PORT(4) & ~(1 << STEP_BIT(4))) | step_port_invert_mask[4];
-      DIRECTION_PORT(4) = (DIRECTION_PORT(4) & ~(1 << DIRECTION_BIT(4))) | dir_port_invert_mask[4];
+      GPIO_WR(STEP_4, step_port_invert_mask[4]);
+      GPIO_WR(DIRECTION_4, dir_port_invert_mask[4]);
     #endif
     #if N_AXIS > 5
-      STEP_PORT(5) = (STEP_PORT(5) & ~(1 << STEP_BIT(5))) | step_port_invert_mask[5];
-      DIRECTION_PORT(5) = (DIRECTION_PORT(5) & ~(1 << DIRECTION_BIT(5))) | dir_port_invert_mask[5];
+      GPIO_WR(STEP_5, step_port_invert_mask[5]);
+      GPIO_WR(DIRECTION_5, dir_port_invert_mask[5]);
     #endif
   #else
     st.dir_outbits = dir_port_invert_mask; // Initialize direction bits to default.
@@ -828,43 +828,43 @@ void stepper_init()
 {
   // Configure step and direction interface pins
   #ifdef DEFAULTS_RAMPS_BOARD
-    STEP_DDR(0) |= 1<<STEP_BIT(0);
-    STEP_DDR(1) |= 1<<STEP_BIT(1);
-    STEP_DDR(2) |= 1<<STEP_BIT(2);
+    GPIO_OUTPUT(STEP_0);
+    GPIO_OUTPUT(STEP_1);
+    GPIO_OUTPUT(STEP_2);
     #if N_AXIS > 3
-      STEP_DDR(3) |= 1<<STEP_BIT(3);
+      GPIO_OUTPUT(STEP_3);
     #endif
     #if N_AXIS > 4
-      STEP_DDR(4) |= 1<<STEP_BIT(4);
+      GPIO_OUTPUT(STEP_4);
     #endif
     #if N_AXIS > 5
-      STEP_DDR(5) |= 1<<STEP_BIT(5);
+      GPIO_OUTPUT(STEP_5);
     #endif
 
-    STEPPER_DISABLE_DDR(0) |= 1<<STEPPER_DISABLE_BIT(0);
-    STEPPER_DISABLE_DDR(1) |= 1<<STEPPER_DISABLE_BIT(1);
-    STEPPER_DISABLE_DDR(2) |= 1<<STEPPER_DISABLE_BIT(2);
+    GPIO_OUTPUT(STEPPER_DISABLE_0);
+    GPIO_OUTPUT(STEPPER_DISABLE_1);
+    GPIO_OUTPUT(STEPPER_DISABLE_2);
     #if N_AXIS > 3
-      STEPPER_DISABLE_DDR(3) |= 1<<STEPPER_DISABLE_BIT(3);
+      GPIO_OUTPUT(STEPPER_DISABLE_3);
     #endif
     #if N_AXIS > 4
-      STEPPER_DISABLE_DDR(4) |= 1<<STEPPER_DISABLE_BIT(4);
+      GPIO_OUTPUT(STEPPER_DISABLE_4);
     #endif
     #if N_AXIS > 5
-      STEPPER_DISABLE_DDR(5) |= 1<<STEPPER_DISABLE_BIT(5);
+      GPIO_OUTPUT(STEPPER_DISABLE_5);
     #endif
 
-    DIRECTION_DDR(0) |= 1<<DIRECTION_BIT(0);
-    DIRECTION_DDR(1) |= 1<<DIRECTION_BIT(1);
-    DIRECTION_DDR(2) |= 1<<DIRECTION_BIT(2);
+    GPIO_OUTPUT(DIRECTION_0);
+    GPIO_OUTPUT(DIRECTION_1);
+    GPIO_OUTPUT(DIRECTION_2);
     #if N_AXIS > 3
-      DIRECTION_DDR(3) |= 1<<DIRECTION_BIT(3);
+      GPIO_OUTPUT(DIRECTION_3);
     #endif
     #if N_AXIS > 4
-      DIRECTION_DDR(4) |= 1<<DIRECTION_BIT(4);
+      GPIO_OUTPUT(DIRECTION_4);
     #endif
     #if N_AXIS > 5
-      DIRECTION_DDR(5) |= 1<<DIRECTION_BIT(5);
+      GPIO_OUTPUT(DIRECTION_5);
     #endif
   #else
     STEP_DDR |= STEP_MASK;

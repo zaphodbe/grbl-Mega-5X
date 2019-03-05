@@ -42,6 +42,7 @@
 // Define the Grbl system include files. NOTE: Do not alter organization.
 #include "config.h"
 #include "nuts_bolts.h"
+#include "gpio.h"
 #include "settings.h"
 #include "system.h"
 #include "defaults.h"
@@ -62,7 +63,6 @@
 #include "stepper.h"
 #include "jog.h"
 #include "sleep.h"
-#include "gpio.h"
 
 // ---------------------------------------------------------------------------------------
 // COMPILE-TIME ERROR CHECKING OF DEFINE VALUES:

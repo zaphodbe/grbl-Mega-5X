@@ -28,12 +28,12 @@ static float pwm_gradient; // Precalulated value to speed up rpm to PWM conversi
 void spindle_init()
 {    
   // Configure variable spindle PWM and enable pin, if required.
-  SPINDLE_PWM_DDR |= (1<<SPINDLE_PWM_BIT); // Configure as PWM output pin.
+  GPIO_OUTPUT(SPINDLE_PWM); // Configure as PWM output pin.
   SPINDLE_TCCRA_REGISTER = SPINDLE_TCCRA_INIT_MASK; // Configure PWM output compare timer
   SPINDLE_TCCRB_REGISTER = SPINDLE_TCCRB_INIT_MASK;
   SPINDLE_OCRA_REGISTER = SPINDLE_OCRA_TOP_VALUE; // Set the top value for 16-bit fast PWM mode
-  SPINDLE_ENABLE_DDR |= (1<<SPINDLE_ENABLE_BIT); // Configure as output pin.
-  SPINDLE_DIRECTION_DDR |= (1<<SPINDLE_DIRECTION_BIT); // Configure as output pin.
+  GPIO_OUTPUT(SPINDLE_ENABLE); // Configure as output pin.
+  GPIO_OUTPUT(SPINDLE_DIRECTION); // Configure as output pin.
 
   pwm_gradient = SPINDLE_PWM_RANGE/(settings.rpm_max-settings.rpm_min);
   spindle_stop();
@@ -43,15 +43,15 @@ void spindle_init()
 uint8_t spindle_get_state()
 {
   #ifdef INVERT_SPINDLE_ENABLE_PIN
-    if (bit_isfalse(SPINDLE_ENABLE_PORT,(1<<SPINDLE_ENABLE_BIT)) && (SPINDLE_TCCRA_REGISTER & (1<<SPINDLE_COMB_BIT))) {
+    if (!GPIO_GET(SPINDLE_ENABLE) && (SPINDLE_TCCRA_REGISTER & (1<<SPINDLE_COMB_BIT))) {
   #else
-    if (bit_istrue(SPINDLE_ENABLE_PORT,(1<<SPINDLE_ENABLE_BIT)) && (SPINDLE_TCCRA_REGISTER & (1<<SPINDLE_COMB_BIT))) {
+    if (GPIO_GET(SPINDLE_ENABLE) && (SPINDLE_TCCRA_REGISTER & (1<<SPINDLE_COMB_BIT))) {
   #endif
 
   #ifdef INVERT_SPINDLE_DIRECTION_PIN
-    if (bit_isfalse(SPINDLE_DIRECTION_PORT,(1<<SPINDLE_DIRECTION_BIT)))
+    if (!GPIO_GET(SPINDLE_DIRECTION))
   #else
-    if (bit_istrue(SPINDLE_DIRECTION_PORT,(1<<SPINDLE_DIRECTION_BIT)))
+    if (GPIO_GET(SPINDLE_DIRECTION))
   #endif
     { return(SPINDLE_STATE_CCW); }
     else { return(SPINDLE_STATE_CW); }
@@ -67,15 +67,15 @@ void spindle_stop()
 {
   SPINDLE_TCCRA_REGISTER &= ~(1<<SPINDLE_COMB_BIT); // Disable PWM. Output voltage is zero.
   #ifdef INVERT_SPINDLE_ENABLE_PIN
-    SPINDLE_ENABLE_PORT |= (1<<SPINDLE_ENABLE_BIT);  // Set pin to high
+    GPIO_SET(SPINDLE_ENABLE);  // Set pin to high
   #else
-    SPINDLE_ENABLE_PORT &= ~(1<<SPINDLE_ENABLE_BIT); // Set pin to low
+    GPIO_CLR(SPINDLE_ENABLE); // Set pin to low
   #endif
 
   #ifdef INVERT_SPINDLE_DIRECTION_PIN
-    SPINDLE_DIRECTION_PORT |= (1<<SPINDLE_DIRECTION_BIT);
+    GPIO_SET(SPINDLE_DIRECTION);
   #else
-    SPINDLE_DIRECTION_PORT &= ~(1<<SPINDLE_DIRECTION_BIT);
+    GPIO_CLR(SPINDLE_DIRECTION);
   #endif
 
 }
@@ -92,9 +92,9 @@ void spindle_set_speed(uint16_t pwm_value)
     } else {
       SPINDLE_TCCRA_REGISTER |= (1<<SPINDLE_COMB_BIT); // Ensure PWM output is enabled.
       #ifdef INVERT_SPINDLE_ENABLE_PIN
-        SPINDLE_ENABLE_PORT &= ~(1<<SPINDLE_ENABLE_BIT);
+        GPIO_CLR(SPINDLE_ENABLE);
       #else
-        SPINDLE_ENABLE_PORT |= (1<<SPINDLE_ENABLE_BIT);
+        GPIO_SET(SPINDLE_ENABLE);
       #endif
     }
   #else
@@ -199,9 +199,9 @@ void spindle_set_state(uint8_t state, float rpm)
     #else
     if (state == SPINDLE_ENABLE_CW) {
     #endif
-      SPINDLE_DIRECTION_PORT &= ~(1<<SPINDLE_DIRECTION_BIT);
+      GPIO_CLR(SPINDLE_DIRECTION);
     } else {
-      SPINDLE_DIRECTION_PORT |= (1<<SPINDLE_DIRECTION_BIT);
+      GPIO_SET(SPINDLE_DIRECTION);
     }
 
     // NOTE: Assumes all calls to this function is when Grbl is not moving or must remain off.
@@ -212,9 +212,9 @@ void spindle_set_state(uint8_t state, float rpm)
 
     #ifndef SPINDLE_ENABLE_OFF_WITH_ZERO_SPEED
       #ifdef INVERT_SPINDLE_ENABLE_PIN
-        SPINDLE_ENABLE_PORT &= ~(1<<SPINDLE_ENABLE_BIT);
+        GPIO_CLR(SPINDLE_ENABLE);
       #else
-        SPINDLE_ENABLE_PORT |= (1<<SPINDLE_ENABLE_BIT);
+        GPIO_SET(SPINDLE_ENABLE);
       #endif   
     #endif
   

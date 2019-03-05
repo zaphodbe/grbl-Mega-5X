@@ -335,18 +335,18 @@ void settings_init() {
 uint8_t get_step_pin_mask(uint8_t axis_idx)
 {
   #ifdef DEFAULTS_RAMPS_BOARD
-    if ( axis_idx == AXIS_1 ) { return((1<<STEP_BIT(AXIS_1))); }
-    if ( axis_idx == AXIS_2 ) { return((1<<STEP_BIT(AXIS_2))); }
+    if ( axis_idx == AXIS_1 ) { return GPIO_MASK(GPIO_IDX(STEP,AXIS_1)); }
+    if ( axis_idx == AXIS_2 ) { return GPIO_MASK(GPIO_IDX(STEP,AXIS_2)); }
     #if N_AXIS > 3
-      if ( axis_idx == AXIS_4 ) { return((1<<STEP_BIT(AXIS_4))); }
+      if ( axis_idx == AXIS_4 ) { return GPIO_MASK(GPIO_IDX(STEP,AXIS_4)); }
     #endif
     #if N_AXIS > 4
-      if ( axis_idx == AXIS_5 ) { return((1<<STEP_BIT(AXIS_5))); }
+      if ( axis_idx == AXIS_5 ) { return GPIO_MASK(GPIO_IDX(STEP,AXIS_5)); }
     #endif
     #if N_AXIS > 5
-      if ( axis_idx == AXIS_6 ) { return((1<<STEP_BIT(AXIS_6))); }
+      if ( axis_idx == AXIS_6 ) { return GPIO_MASK(GPIO_IDX(STEP,AXIS_6)); }
     #endif
-    return((1<<STEP_BIT(AXIS_3)));
+    return GPIO_MASK(GPIO_IDX(STEP,AXIS_3));
   #else
     if ( axis_idx == AXIS_1 ) { return((1<<X_STEP_BIT)); }
     if ( axis_idx == AXIS_2 ) { return((1<<Y_STEP_BIT)); }
@@ -359,18 +359,18 @@ uint8_t get_step_pin_mask(uint8_t axis_idx)
 uint8_t get_direction_pin_mask(uint8_t axis_idx)
 {
   #ifdef DEFAULTS_RAMPS_BOARD
-    if ( axis_idx == AXIS_1 ) { return((1<<DIRECTION_BIT(AXIS_1))); }
-    if ( axis_idx == AXIS_2 ) { return((1<<DIRECTION_BIT(AXIS_2))); }
+    if ( axis_idx == AXIS_1 ) { return GPIO_MASK(GPIO_IDX(DIRECTION,AXIS_1)); }
+    if ( axis_idx == AXIS_2 ) { return GPIO_MASK(GPIO_IDX(DIRECTION,AXIS_2)); }
     #if N_AXIS > 3
-      if ( axis_idx == AXIS_4 ) { return((1<<DIRECTION_BIT(AXIS_4))); }
+      if ( axis_idx == AXIS_4 ) { return GPIO_MASK(GPIO_IDX(DIRECTION,AXIS_4)); }
     #endif
     #if N_AXIS > 4
-      if ( axis_idx == AXIS_5 ) { return((1<<DIRECTION_BIT(AXIS_5))); }
+      if ( axis_idx == AXIS_5 ) { return GPIO_MASK(GPIO_IDX(DIRECTION,AXIS_5)); }
     #endif
     #if N_AXIS > 5
-      if ( axis_idx == AXIS_6 ) { return((1<<DIRECTION_BIT(AXIS_6))); }
+      if ( axis_idx == AXIS_6 ) { return GPIO_MASK(GPIO_IDX(DIRECTION,AXIS_6)); }
     #endif
-    return((1<<DIRECTION_BIT(AXIS_3)));
+    return GPIO_MASK(GPIO_IDX(DIRECTION,AXIS_3));
   #else
     if ( axis_idx == AXIS_1 ) { return((1<<X_DIRECTION_BIT)); }
     if ( axis_idx == AXIS_2 ) { return((1<<Y_DIRECTION_BIT)); }
@@ -384,35 +384,35 @@ uint8_t get_direction_pin_mask(uint8_t axis_idx)
 #ifdef DEFAULTS_RAMPS_BOARD
   uint8_t get_min_limit_pin_mask(uint8_t axis_idx)
   {
-    if ( axis_idx == AXIS_1 ) { return((1<<MIN_LIMIT_BIT(AXIS_1))); }
-    if ( axis_idx == AXIS_2 ) { return((1<<MIN_LIMIT_BIT(AXIS_2))); }
+    if ( axis_idx == AXIS_1 ) { return GPIO_MASK(GPIO_IDX(MIN_LIMIT,AXIS_1)); }
+    if ( axis_idx == AXIS_2 ) { return GPIO_MASK(GPIO_IDX(MIN_LIMIT,AXIS_2)); }
     #if N_AXIS > 3
-      if ( axis_idx == AXIS_4 ) { return((1<<MIN_LIMIT_BIT(AXIS_4))); }
+      if ( axis_idx == AXIS_4 ) { return GPIO_MASK(GPIO_IDX(MIN_LIMIT,AXIS_4)); }
     #endif
     #if N_AXIS > 4
-      if ( axis_idx == AXIS_5 ) { return((1<<MIN_LIMIT_BIT(AXIS_5))); }
+      if ( axis_idx == AXIS_5 ) { return GPIO_MASK(GPIO_IDX(MIN_LIMIT,AXIS_5)); }
     #endif
     #if N_AXIS > 5
-      if ( axis_idx == AXIS_6 ) { return((1<<MIN_LIMIT_BIT(AXIS_6))); }
+      if ( axis_idx == AXIS_6 ) { return GPIO_MASK(GPIO_IDX(MIN_LIMIT,AXIS_6)); }
     #endif
-    return((1<<MIN_LIMIT_BIT(AXIS_3)));
+    return GPIO_MASK(GPIO_IDX(MIN_LIMIT,AXIS_3));
   }
 
-   uint8_t get_max_limit_pin_mask(uint8_t axis_idx)
-   {
-     if ( axis_idx == AXIS_1 ) { return((1<<MAX_LIMIT_BIT(AXIS_1))); }
-     if ( axis_idx == AXIS_2 ) { return((1<<MAX_LIMIT_BIT(AXIS_2))); }
+  uint8_t get_max_limit_pin_mask(uint8_t axis_idx)
+  {
+    if ( axis_idx == AXIS_1 ) { return GPIO_MASK(GPIO_IDX(MAX_LIMIT,AXIS_1)); }
+    if ( axis_idx == AXIS_2 ) { return GPIO_MASK(GPIO_IDX(MAX_LIMIT,AXIS_2)); }
     #if N_AXIS > 3
-      if ( axis_idx == AXIS_4 ) { return((1<<MAX_LIMIT_BIT(AXIS_4))); }
+      if ( axis_idx == AXIS_4 ) { return GPIO_MASK(GPIO_IDX(MAX_LIMIT,AXIS_4)); }
     #endif
     #if N_AXIS > 4
-      if ( axis_idx == AXIS_5 ) { return((1<<MAX_LIMIT_BIT(AXIS_5))); }
+      if ( axis_idx == AXIS_5 ) { return GPIO_MASK(GPIO_IDX(MAX_LIMIT,AXIS_5)); }
     #endif
     #if N_AXIS > 5
-      if ( axis_idx == AXIS_6 ) { return((1<<MAX_LIMIT_BIT(AXIS_6))); }
+      if ( axis_idx == AXIS_6 ) { return GPIO_MASK(GPIO_IDX(MAX_LIMIT,AXIS_6)); }
     #endif
-     return((1<<MAX_LIMIT_BIT(AXIS_3)));
-  }
+    return GPIO_MASK(GPIO_IDX(MAX_LIMIT,AXIS_3));
+  } 
 #else
   uint8_t get_limit_pin_mask(uint8_t axis_idx)
   {

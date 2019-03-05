@@ -23,8 +23,8 @@
 
 void coolant_init()
 {
-  COOLANT_FLOOD_DDR |= (1 << COOLANT_FLOOD_BIT); // Configure as output pin.
-  COOLANT_MIST_DDR |= (1 << COOLANT_MIST_BIT); // Configure as output pin.
+  GPIO_OUTPUT(COOLANT_FLOOD); // Configure as output pin.
+  GPIO_OUTPUT(COOLANT_MIST); // Configure as output pin.
   coolant_stop();
 }
 
@@ -34,16 +34,16 @@ uint8_t coolant_get_state()
 {
   uint8_t cl_state = COOLANT_STATE_DISABLE;
   #ifdef INVERT_COOLANT_FLOOD_PIN
-    if (bit_isfalse(COOLANT_FLOOD_PORT,(1 << COOLANT_FLOOD_BIT))) {
+    if (!GPIO_GET(COOLANT_FLOOD)) {
   #else
-    if (bit_istrue(COOLANT_FLOOD_PORT,(1 << COOLANT_FLOOD_BIT))) {
+    if (GPIO_SET(COOLANT_FLOOD)) {
   #endif
     cl_state |= COOLANT_STATE_FLOOD;
   }
   #ifdef INVERT_COOLANT_MIST_PIN
-    if (bit_isfalse(COOLANT_MIST_PORT,(1 << COOLANT_MIST_BIT))) {
+    if (!GPIO_GET(COOLANT_MIST)) {
   #else
-    if (bit_istrue(COOLANT_MIST_PORT,(1 << COOLANT_MIST_BIT))) {
+    if (GPIO_GET(COOLANT_MIST)) {
   #endif
     cl_state |= COOLANT_STATE_MIST;
   }
@@ -56,14 +56,14 @@ uint8_t coolant_get_state()
 void coolant_stop()
 {
   #ifdef INVERT_COOLANT_FLOOD_PIN
-    COOLANT_FLOOD_PORT |= (1 << COOLANT_FLOOD_BIT);
+    GPIO_SET(COOLANT_FLOOD);
   #else
-    COOLANT_FLOOD_PORT &= ~(1 << COOLANT_FLOOD_BIT);
+    GPIO_CLR(COOLANT_FLOOD);
   #endif
   #ifdef INVERT_COOLANT_MIST_PIN
-    COOLANT_MIST_PORT |= (1 << COOLANT_MIST_BIT);
+    GPIO_SET(COOLANT_MIST);
   #else
-    COOLANT_MIST_PORT &= ~(1 << COOLANT_MIST_BIT);
+    GPIO_CLR(COOLANT_MIST);
   #endif
 }
 
@@ -84,17 +84,17 @@ void coolant_set_state(uint8_t mode)
   
     if (mode & COOLANT_FLOOD_ENABLE) {
       #ifdef INVERT_COOLANT_FLOOD_PIN
-        COOLANT_FLOOD_PORT &= ~(1 << COOLANT_FLOOD_BIT);
+        GPIO_CLR(COOLANT_FLOOD);
       #else
-        COOLANT_FLOOD_PORT |= (1 << COOLANT_FLOOD_BIT);
+        GPIO_SET(COOLANT_FLOOD);
       #endif
     }
   
     if (mode & COOLANT_MIST_ENABLE) {
       #ifdef INVERT_COOLANT_MIST_PIN
-        COOLANT_MIST_PORT &= ~(1 << COOLANT_MIST_BIT);
+        GPIO_CLR(COOLANT_MIST);
       #else
-        COOLANT_MIST_PORT |= (1 << COOLANT_MIST_BIT);
+        GPIO_SET(COOLANT_MIST);
       #endif
     }
   

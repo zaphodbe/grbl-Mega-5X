@@ -24,11 +24,23 @@
 
 void system_init()
 {
-  CONTROL_DDR &= ~(CONTROL_MASK); // Configure as input pins
+  GPIO_INPUT(CONTROL_RESET);
+  GPIO_INPUT(CONTROL_FEED_HOLD);
+  GPIO_INPUT(CONTROL_CYCLE_START);
+  GPIO_INPUT(CONTROL_SAFETY_DOOR);
+  //CONGTROL_DDR &= ~(CONTROL_MASK); // Configure as input pins
   #ifdef DISABLE_CONTROL_PIN_PULL_UP
-    CONTROL_PORT &= ~(CONTROL_MASK); // Normal low operation. Requires external pull-down.
+    GPIO_NOPULL(CONTROL_RESET);
+    GPIO_NOPULL(CONTROL_FEED_HOLD);
+    GPIO_NOPULL(CONTROL_CYCLE_START);
+    GPIO_NOPULL(CONTROL_SAFETY_DOOR);
+    //CONTROL_PORT &= ~(CONTROL_MASK); // Normal low operation. Requires external pull-down.
   #else
-    CONTROL_PORT |= CONTROL_MASK;   // Enable internal pull-up resistors. Normal high operation.
+    GPIO_PULLUP(CONTROL_RESET);
+    GPIO_PULLUP(CONTROL_FEED_HOLD);
+    GPIO_PULLUP(CONTROL_CYCLE_START);
+    GPIO_PULLUP(CONTROL_SAFETY_DOOR);
+    //CONTROL_PORT |= CONTROL_MASK;   // Enable internal pull-up resistors. Normal high operation.
   #endif
   CONTROL_PCMSK |= CONTROL_MASK;  // Enable specific pins of the Pin Change Interrupt
   PCICR |= (1 << CONTROL_INT);   // Enable Pin Change Interrupt
@@ -41,15 +53,15 @@ void system_init()
 uint8_t system_control_get_state()
 {
   uint8_t control_state = 0;
-  uint8_t pin = (CONTROL_PIN & CONTROL_MASK);
+  uint8_t pin = (GPIO_PIN(CONTROL_RESET) & CONTROL_MASK);
   #ifdef INVERT_CONTROL_PIN_MASK
     pin ^= INVERT_CONTROL_PIN_MASK;
   #endif
   if (pin) {
-    if (bit_isfalse(pin,(1<<CONTROL_SAFETY_DOOR_BIT))) { control_state |= CONTROL_PIN_INDEX_SAFETY_DOOR; }
-    if (bit_isfalse(pin,(1<<CONTROL_RESET_BIT))) { control_state |= CONTROL_PIN_INDEX_RESET; }
-    if (bit_isfalse(pin,(1<<CONTROL_FEED_HOLD_BIT))) { control_state |= CONTROL_PIN_INDEX_FEED_HOLD; }
-    if (bit_isfalse(pin,(1<<CONTROL_CYCLE_START_BIT))) { control_state |= CONTROL_PIN_INDEX_CYCLE_START; }
+    if (bit_isfalse(pin,GPIO_MASK(CONTROL_SAFETY_DOOR))) { control_state |= CONTROL_PIN_INDEX_SAFETY_DOOR; }
+    if (bit_isfalse(pin,GPIO_MASK(CONTROL_RESET))) { control_state |= CONTROL_PIN_INDEX_RESET; }
+    if (bit_isfalse(pin,GPIO_MASK(CONTROL_FEED_HOLD))) { control_state |= CONTROL_PIN_INDEX_FEED_HOLD; }
+    if (bit_isfalse(pin,GPIO_MASK(CONTROL_CYCLE_START))) { control_state |= CONTROL_PIN_INDEX_CYCLE_START; }
   }
   return(control_state);
 }
