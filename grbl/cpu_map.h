@@ -504,6 +504,10 @@
   // Define spindle output pins.
   #define SPINDLE_PWM           ARDUINO_MEGA_D8
 
+  // Additiona GPIO's for other controll
+  #define LUBRICATION           ARDUINO_MEGA_D11
+  #define SPINDLE_BREAK         ARDUINO_MEGA_D12
+
 #endif
 
 /*

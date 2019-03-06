@@ -328,4 +328,7 @@
 // Initializes gpio pins.
 void gpio_init();
 
+void lube_control(uint8_t reason, uint8_t enable);
+void break_control(uint8_t enable);
+
 #endif

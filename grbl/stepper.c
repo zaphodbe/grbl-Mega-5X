@@ -277,6 +277,7 @@ void st_wake_up()
         GPIO_CLR(STEPPER_DISABLE_5);
       #endif
     }
+    lube_control(1,1);
     // Initialize stepper output bits to ensure first ISR call does not step.
     for (idx = 0; idx < N_AXIS; idx++) {
       st.step_outbits[idx] = step_port_invert_mask[idx];
@@ -320,6 +321,7 @@ void st_go_idle()
     delay_ms(settings.stepper_idle_lock_time);
     pin_state = true; // Override. Disable steppers.
   }
+  lube_control(1,!pin_state);
   if (bit_istrue(settings.flags,BITFLAG_INVERT_ST_ENABLE)) { pin_state = !pin_state; } // Apply pin invert.
   #ifdef DEFAULTS_RAMPS_BOARD
     if (pin_state) {
