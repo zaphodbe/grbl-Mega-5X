@@ -72,6 +72,7 @@ void spindle_stop()
     GPIO_CLR(SPINDLE_ENABLE); // Set pin to low
   #endif
   lube_control(0,0);
+  break_control(0);
 
   #ifdef INVERT_SPINDLE_DIRECTION_PIN
     GPIO_SET(SPINDLE_DIRECTION);
@@ -97,7 +98,8 @@ void spindle_set_speed(uint16_t pwm_value)
       #else
         GPIO_SET(SPINDLE_ENABLE);
       #endif
-        lube_control(0,1);
+      lube_control(0,1);
+      break_control(1);
     }
   #else
     if (pwm_value == SPINDLE_PWM_OFF_VALUE) {
@@ -219,6 +221,7 @@ void spindle_set_state(uint8_t state, float rpm)
         GPIO_SET(SPINDLE_ENABLE);
       #endif
       lube_control(0,1);
+      break_control(1);
     #endif
   
   }

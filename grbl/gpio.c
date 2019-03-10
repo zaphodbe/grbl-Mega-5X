@@ -30,8 +30,6 @@ void lube_control(uint8_t reason, uint8_t enable)
 {
     static uint8_t state = 0;
 
-    if (reason == 0) break_control(enable);
-
     if (enable) {
         state |= (1 << reason);
     } else {
@@ -47,6 +45,9 @@ void lube_control(uint8_t reason, uint8_t enable)
 
 void break_control(uint8_t enable)
 {
+    #ifdef INVERT_SPINDLE_BREAK_PIN
+      enable = !enable;
+    #endif
     if (enable) {
         GPIO_SET(SPINDLE_BREAK);
     } else {

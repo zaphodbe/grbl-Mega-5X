@@ -38,7 +38,7 @@
 #define GPIO_WR(gpio,val)   GPIO_PORT(gpio) = (GPIO_PORT(gpio) & ~GPIO_MASK(gpio)) | val
 #define GPIO_SET(gpio)      GPIO_PORT(gpio) |= GPIO_MASK(gpio)
 #define GPIO_CLR(gpio)      GPIO_PORT(gpio) &= ~GPIO_MASK(gpio)
-#define GPIO_GET(gpio)      (GPIO_PORT(gpio) & GPIO_MASK(gpio))
+#define GPIO_GET(gpio)      (GPIO_PIN(gpio) & GPIO_MASK(gpio) == GPIO_MASK(gpio))
 #define GPIO_TOGGLE(gpio)   GPIO_PIN(gpio) = GPIO_MASK(gpio)
 #define GPIO_OUTPUT(gpio)   GPIO_DDR(gpio) |= GPIO_MASK(gpio)
 #define GPIO_INPUT(gpio)    GPIO_DDR(gpio) &= ~GPIO_MASK(gpio)

@@ -36,7 +36,7 @@ uint8_t coolant_get_state()
   #ifdef INVERT_COOLANT_FLOOD_PIN
     if (!GPIO_GET(COOLANT_FLOOD)) {
   #else
-    if (GPIO_SET(COOLANT_FLOOD)) {
+    if (GPIO_GET(COOLANT_FLOOD)) {
   #endif
     cl_state |= COOLANT_STATE_FLOOD;
   }
