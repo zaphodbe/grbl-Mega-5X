@@ -383,72 +383,72 @@
   #define SERIAL_UDRE USART0_UDRE_vect
 
   // Define step pulse output pins.
-  #define STEP_0            ARDUINO_MEGA_A0
-  #define STEP_1            ARDUINO_MEGA_A6
-  #define STEP_2            ARDUINO_MEGA_D46
+  #define STEP_0            ARDUINO_MEGA_D53
+  #define STEP_1            ARDUINO_MEGA_D50
+  #define STEP_2            ARDUINO_MEGA_D47
   #if N_AXIS > 3
-    #define STEP_3          ARDUINO_MEGA_D26
+    #define STEP_3          ARDUINO_MEGA_D44
   #endif
   #if N_AXIS > 4
-    #define STEP_4          ARDUINO_MEGA_D36
+    #define STEP_4          ARDUINO_MEGA_D41
   #endif
   #if N_AXIS > 5
-    #define STEP_5          ARDUINO_MEGA_D49
+    #define STEP_5          ARDUINO_MEGA_D38
   #endif
 
   // Define step direction output pins.
-  #define DIRECTION_0       ARDUINO_MEGA_A1
-  #define DIRECTION_1       ARDUINO_MEGA_A7
-  #define DIRECTION_2       ARDUINO_MEGA_D48
+  #define DIRECTION_0       ARDUINO_MEGA_D52
+  #define DIRECTION_1       ARDUINO_MEGA_D49
+  #define DIRECTION_2       ARDUINO_MEGA_D46
   #if N_AXIS > 3
-    #define DIRECTION_3     ARDUINO_MEGA_D28
+    #define DIRECTION_3     ARDUINO_MEGA_D43
   #endif
   #if N_AXIS > 4
-    #define DIRECTION_4     ARDUINO_MEGA_D34
+    #define DIRECTION_4     ARDUINO_MEGA_D40
   #endif
   #if N_AXIS > 5
-    #define DIRECTION_5     ARDUINO_MEGA_D51
+    #define DIRECTION_5     ARDUINO_MEGA_D37
   #endif
 
   // Define stepper driver enable/disable output pin.
-  #define STEPPER_DISABLE_0    ARDUINO_MEGA_D38
-  #define STEPPER_DISABLE_1    ARDUINO_MEGA_A2
-  #define STEPPER_DISABLE_2    ARDUINO_MEGA_A8
+  #define STEPPER_DISABLE_0    ARDUINO_MEGA_D51
+  #define STEPPER_DISABLE_1    ARDUINO_MEGA_D48
+  #define STEPPER_DISABLE_2    ARDUINO_MEGA_D45
   #if N_AXIS > 3
-    #define STEPPER_DISABLE_3  ARDUINO_MEGA_D24
+    #define STEPPER_DISABLE_3  ARDUINO_MEGA_D42
   #endif
   #if N_AXIS > 4
-    #define STEPPER_DISABLE_4  ARDUINO_MEGA_D30
+    #define STEPPER_DISABLE_4  ARDUINO_MEGA_D39
   #endif
   #if N_AXIS > 5
-    #define STEPPER_DISABLE_5  ARDUINO_MEGA_D53
+    #define STEPPER_DISABLE_5  ARDUINO_MEGA_D36
   #endif
 
   // Define homing/hard limit switch input pins and limit interrupt vectors.
-  #define MIN_LIMIT_0       ARDUINO_MEGA_D3
-  #define MIN_LIMIT_1       ARDUINO_MEGA_D14
-  #define MIN_LIMIT_2       ARDUINO_MEGA_D18
+  #define MIN_LIMIT_0       ARDUINO_MEGA_D22
+  #define MIN_LIMIT_1       ARDUINO_MEGA_D24
+  #define MIN_LIMIT_2       ARDUINO_MEGA_D26
   #if N_AXIS > 3
-    #define MIN_LIMIT_3     ARDUINO_MEGA_D42
+    #define MIN_LIMIT_3     ARDUINO_MEGA_D30
   #endif
   #if N_AXIS > 4
-    #define MIN_LIMIT_4     ARDUINO_MEGA_D44
+    #define MIN_LIMIT_4     ARDUINO_MEGA_D32
   #endif
   #if N_AXIS > 5
-    #define MIN_LIMIT_5     ARDUINO_MEGA_A3
+    #define MIN_LIMIT_5     ARDUINO_MEGA_D34
   #endif
 
-  #define MAX_LIMIT_0       ARDUINO_MEGA_D2
-  #define MAX_LIMIT_1       ARDUINO_MEGA_D15
-  #define MAX_LIMIT_2       ARDUINO_MEGA_D19
+  #define MAX_LIMIT_0       ARDUINO_MEGA_D23
+  #define MAX_LIMIT_1       ARDUINO_MEGA_D25
+  #define MAX_LIMIT_2       ARDUINO_MEGA_D27
   #if N_AXIS > 3
-    #define MAX_LIMIT_3     ARDUINO_MEGA_D40
+    #define MAX_LIMIT_3     ARDUINO_MEGA_D31
   #endif
   #if N_AXIS > 4
-    #define MAX_LIMIT_4     ARDUINO_MEGA_A5
+    #define MAX_LIMIT_4     ARDUINO_MEGA_D33
   #endif
   #if N_AXIS > 5
-    #define MAX_LIMIT_5     ARDUINO_MEGA_A4
+    #define MAX_LIMIT_5     ARDUINO_MEGA_D35
   #endif
 
   //  #define LIMIT_INT       PCIE0  // Pin change interrupt enable pin
@@ -457,20 +457,16 @@
   //  #define LIMIT_MASK ((1<<X_LIMIT_BIT)|(1<<Y_LIMIT_BIT)|(1<<Z_LIMIT_BIT)) // All limit bits
   #define DISABLE_HW_LIMITS
 
-  // Define spindle enable and spindle direction output pins.
-  #define SPINDLE_ENABLE    ARDUINO_MEGA_D4
-  #define SPINDLE_DIRECTION ARDUINO_MEGA_D5
-
   // Define flood and mist coolant enable output pins.
-  #define COOLANT_FLOOD     ARDUINO_MEGA_D10
-  #define COOLANT_MIST      ARDUINO_MEGA_D9
+  #define COOLANT_FLOOD     ARDUINO_MEGA_D15
+  #define COOLANT_MIST      ARDUINO_MEGA_D14
 
   // Define user-control CONTROLs (cycle start, reset, feed hold) input pins.
   // NOTE: All CONTROLs pins must be on the same port and not on a port with other input pins (limits).
   #define CONTROL_RESET         ARDUINO_MEGA_A9
   #define CONTROL_FEED_HOLD     ARDUINO_MEGA_A10
   #define CONTROL_CYCLE_START   ARDUINO_MEGA_A11
-  #define CONTROL_SAFETY_DOOR   ARDUINO_MEGA_A12
+  #define CONTROL_SAFETY_DOOR   ARDUINO_MEGA_D28
 
   #define CONTROL_INT       PCIE2  // Pin change interrupt enable pin
   #define CONTROL_INT_vect  PCINT2_vect
@@ -478,7 +474,7 @@
   #define CONTROL_MASK      (GPIO_MASK(CONTROL_RESET)|GPIO_MASK(CONTROL_FEED_HOLD)|GPIO_MASK(CONTROL_CYCLE_START)|GPIO_MASK(CONTROL_SAFETY_DOOR))
 
   // Define probe switch input pin.
-  #define PROBE                 ARDUINO_MEGA_A15
+  #define PROBE                 ARDUINO_MEGA_D29
 
   // Advanced Configuration Below You should not need to touch these variables
   // Set Timer up to use TIMER4B which is attached to Digital Pin 8 - Ramps 1.4 12v output with heat sink
@@ -503,10 +499,13 @@
 
   // Define spindle output pins.
   #define SPINDLE_PWM           ARDUINO_MEGA_D8
+  #define SPINDLE_ENABLE        ARDUINO_MEGA_D9
+  #define SPINDLE_DIRECTION     ARDUINO_MEGA_D10
 
   // Additiona GPIO's for other controll
-  #define LUBRICATION           ARDUINO_MEGA_D11
-  #define SPINDLE_BREAK         ARDUINO_MEGA_D12
+  #define LUBRICATION           ARDUINO_MEGA_D16
+  #define SPINDLE_READY         ARDUINO_MEGA_D20
+  #define SPINDLE_BREAK         ARDUINO_MEGA_D21
 
 #endif
 
