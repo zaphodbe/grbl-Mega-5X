@@ -330,5 +330,8 @@ void gpio_init();
 
 void lube_control(uint8_t reason, uint8_t enable);
 void break_control(uint8_t enable);
+void gpio_set(uint8_t gpio, uint8_t value);
+uint8_t gpio_get(uint8_t gpio);
+void gpio_sleep();
 
 #endif

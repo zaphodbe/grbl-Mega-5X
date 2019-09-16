@@ -504,6 +504,9 @@
 
   // Additiona GPIO's for other controll
   #define LUBRICATION           ARDUINO_MEGA_D16
+  #define RELAY_RSVD3           ARDUINO_MEGA_D17
+  #define COMPRESSOR            ARDUINO_MEGA_D18
+  #define VACUUM                ARDUINO_MEGA_D19
   #define SPINDLE_READY         ARDUINO_MEGA_D20
   #define SPINDLE_BREAK         ARDUINO_MEGA_D21
 

@@ -623,6 +623,7 @@ static void protocol_exec_rt_suspend()
             // Spindle and coolant should already be stopped, but do it again just to be sure.
             spindle_set_state(SPINDLE_DISABLE,0.0); // De-energize
             coolant_set_state(COOLANT_DISABLE); // De-energize
+            gpio_sleep(); // Put gpio's in sleep state
             st_go_idle(); // Disable steppers
             while (!(sys.abort)) { protocol_exec_rt_system(); } // Do nothing until reset.
             return; // Abort received. Return to re-initialize.

@@ -23,8 +23,14 @@
 void gpio_init()
 {
   GPIO_OUTPUT(LUBRICATION);
+  GPIO_OUTPUT(RELAY_RSVD3);
+  GPIO_OUTPUT(COMPRESSOR);
+  GPIO_OUTPUT(VACUUM);
   GPIO_OUTPUT(SPINDLE_READY);
   GPIO_OUTPUT(SPINDLE_BREAK);
+
+  GPIO_SET(COMPRESSOR);
+  GPIO_SET(VACUUM);
 }
 
 void lube_control(uint8_t reason, uint8_t enable)
@@ -54,4 +60,54 @@ void break_control(uint8_t enable)
     } else {
         GPIO_CLR(SPINDLE_BREAK);
     }
+}
+
+void gpio_set(uint8_t gpio,uint8_t value)
+{
+    switch (gpio) {
+    case 17:
+        if (value) {
+            GPIO_SET(ARDUINO_MEGA_D17);
+        } else {
+            GPIO_CLR(ARDUINO_MEGA_D17);
+        }
+        break;
+    case 18:
+        if (value) {
+            GPIO_SET(ARDUINO_MEGA_D18);
+        } else {
+            GPIO_CLR(ARDUINO_MEGA_D18);
+        }
+        break;
+    case 19:
+        if (value) {
+            GPIO_SET(ARDUINO_MEGA_D19);
+        } else {
+            GPIO_CLR(ARDUINO_MEGA_D19);
+        }
+        break;
+    }
+}
+
+uint8_t gpio_get(uint8_t gpio)
+{
+    uint8_t value = 0;
+    switch (gpio) {
+    case 17:
+        value = GPIO_GET(ARDUINO_MEGA_D17);
+        break;
+    case 18:
+        value = GPIO_GET(ARDUINO_MEGA_D18);
+        break;
+    case 19:
+        value = GPIO_GET(ARDUINO_MEGA_D19);
+        break;
+    }
+    return value;
+}
+
+void gpio_sleep()
+{
+    GPIO_CLR(COMPRESSOR);
+    GPIO_CLR(VACUUM);
 }
